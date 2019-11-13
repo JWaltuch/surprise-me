@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+// import {Text, View} from 'react-native'
 
 /**
  * COMPONENT
@@ -10,7 +11,7 @@ export const UserHome = props => {
 
   return (
     <div>
-      <h3>Welcome, {email}</h3>
+      <h1>Hello, {email}!</h1>
     </div>
   )
 }
