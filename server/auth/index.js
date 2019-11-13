@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const User = require('../db/models/user')
+const firebase = require('firebase')
 module.exports = router
 
 router.post('/login', async (req, res, next) => {
@@ -21,8 +22,24 @@ router.post('/login', async (req, res, next) => {
 
 router.post('/signup', async (req, res, next) => {
   try {
-    const user = await User.create(req.body)
-    req.login(user, err => (err ? next(err) : res.json(user)))
+    const username = req.body.username
+    const email = req.body.email
+    const password = req.body.password
+
+    const referencePath = '/Users/' + username + '/'
+    const userReference = firebase.database().ref(referencePath)
+    //user is created but how to send a user back?
+    const newUser = await userReference.update(
+      {Username: username, Email: email, Password: password},
+      function(error) {
+        if (error) {
+          res.send('Data could not be updated.' + error)
+        } else {
+          console.log(newUser)
+          req.login(newUser, err => (err ? next(err) : res.json(newUser)))
+        }
+      }
+    )
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {
       res.status(401).send('User already exists')

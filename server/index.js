@@ -10,6 +10,7 @@ const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 3000
 const app = express()
 const socketio = require('socket.io')
+var firebase = require('firebase')
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
@@ -43,6 +44,19 @@ passport.deserializeUser(async (id, done) => {
 const createApp = () => {
   // logging middleware
   app.use(morgan('dev'))
+
+  //firebase config
+  var config = {
+    apiKey: 'AIzaSyD5YgeMxjSfBvPPSuQARAPKPZlnwGx9AtU',
+    authDomain: 'surpriseme-ce130.firebaseapp.com',
+    databaseURL: 'https://surpriseme-ce130.firebaseio.com',
+    projectId: 'surpriseme-ce130',
+    storageBucket: 'surpriseme-ce130.appspot.com',
+    messagingSenderId: '880304328557',
+    appId: '1:880304328557:web:748b9cd854a8ad82ff1464',
+    measurementId: 'G-S6C7MLVB57'
+  }
+  firebase.initializeApp(config)
 
   // body parsing middleware
   app.use(express.json())
@@ -83,6 +97,11 @@ const createApp = () => {
 
   // sends index.html
   app.use('*', (req, res) => {
+    console.log('testing firebase')
+    firebase
+      .database()
+      .ref('/TestMessages')
+      .set({TestMessage: 'GET Request'})
     res.sendFile(path.join(__dirname, '..', 'public/index.html'))
   })
 
