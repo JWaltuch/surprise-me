@@ -56,7 +56,7 @@ router.post('/signup', async (req, res, next) => {
 
     await db
       .ref(`/users/${username}`)
-      .set({username, email, password, salt, id: 1})
+      .set({username, email, password, salt})
       .then(function() {
         return db.ref(`/users/${username}`).once('value')
       })

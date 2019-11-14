@@ -30,12 +30,18 @@ if (process.env.NODE_ENV === 'test') {
 if (process.env.NODE_ENV !== 'production') require('../secrets')
 
 // passport registration
-passport.serializeUser((user, done) => done(null, user.id))
+passport.serializeUser((user, done) => done(null, user.username))
 
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (username, done) => {
   try {
-    const user = await db.models.user.findByPk(id)
-    done(null, user)
+    await firebase
+      .database()
+      .ref(`/users/${username}`)
+      .once('value')
+      .then(async function(snapshot) {
+        const data = await snapshot.val()
+        done(null, data)
+      })
   } catch (err) {
     done(err)
   }
