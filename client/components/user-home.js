@@ -8,11 +8,12 @@ import Wishlist from './wishlist'
  */
 export const UserHome = props => {
   const {email} = props
+  const {username} = props
 
   return (
     <div>
       <h1>Hello, {email}!</h1>
-      <Wishlist />
+      <Wishlist username={username} />
     </div>
   )
 }
@@ -22,7 +23,8 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    email: state.user.email
+    email: state.user.email,
+    username: state.user.username
   }
 }
 
@@ -32,5 +34,6 @@ export default connect(mapState)(UserHome)
  * PROP TYPES
  */
 UserHome.propTypes = {
-  email: PropTypes.string
+  email: PropTypes.string,
+  username: PropTypes.string
 }
