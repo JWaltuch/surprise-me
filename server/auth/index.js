@@ -1,20 +1,45 @@
 const router = require('express').Router()
-const User = require('../db/models/user')
 const firebase = require('firebase')
+const crypto = require('crypto')
 module.exports = router
 
+// const db = firebase.firestore()
+const db = firebase.database()
+
+const generateSalt = () => {
+  return crypto.randomBytes(16).toString('base64')
+}
+
+const encryptPassword = (plainText, salt) => {
+  return crypto
+    .createHash('RSA-SHA256')
+    .update(plainText)
+    .update(salt)
+    .digest('hex')
+}
+
 router.post('/login', async (req, res, next) => {
+  const username = req.body.username
+  const email = req.body.email
+  let password = req.body.password
+
   try {
-    const user = await User.findOne({where: {email: req.body.email}})
-    if (!user) {
-      console.log('No such user found:', req.body.email)
-      res.status(401).send('Wrong username and/or password')
-    } else if (!user.correctPassword(req.body.password)) {
-      console.log('Incorrect password for user:', req.body.email)
-      res.status(401).send('Wrong username and/or password')
-    } else {
-      req.login(user, err => (err ? next(err) : res.json(user)))
-    }
+    await db
+      .ref(`/users/${username}`)
+      .once('value')
+      .then(async function(snapshot) {
+        const data = await snapshot.val()
+        password = encryptPassword(password, data.salt)
+        if (data.username !== username || data.password !== password) {
+          console.log('No such user found:', email)
+          res.status(401).send('Wrong username and/or password')
+        } else if (data.password !== password) {
+          console.log('Incorrect password for user:', email)
+          res.status(401).send('Wrong username and/or password')
+        } else {
+          req.login(data, err => (err ? next(err) : res.json(data)))
+        }
+      })
   } catch (err) {
     next(err)
   }
@@ -24,28 +49,23 @@ router.post('/signup', async (req, res, next) => {
   try {
     const username = req.body.username
     const email = req.body.email
-    const password = req.body.password
+    let password = req.body.password
 
-    const referencePath = '/Users/' + username + '/'
-    const userReference = firebase.database().ref(referencePath)
-    //user is created but how to send a user back?
-    const newUser = await userReference.update(
-      {Username: username, Email: email, Password: password},
-      function(error) {
-        if (error) {
-          res.send('Data could not be updated.' + error)
-        } else {
-          console.log(newUser)
-          req.login(newUser, err => (err ? next(err) : res.json(newUser)))
-        }
-      }
-    )
+    const salt = generateSalt()
+    password = encryptPassword(password, salt)
+
+    await db
+      .ref(`/users/${username}`)
+      .set({username, email, password, salt, id: 1})
+      .then(function() {
+        return db.ref(`/users/${username}`).once('value')
+      })
+      .then(async function(snapshot) {
+        const newUser = await snapshot.val()
+        req.login(newUser, err => (err ? next(err) : res.json(newUser)))
+      })
   } catch (err) {
-    if (err.name === 'SequelizeUniqueConstraintError') {
-      res.status(401).send('User already exists')
-    } else {
-      next(err)
-    }
+    next(err)
   }
 })
 

@@ -97,11 +97,6 @@ const createApp = () => {
 
   // sends index.html
   app.use('*', (req, res) => {
-    console.log('testing firebase')
-    firebase
-      .database()
-      .ref('/TestMessages')
-      .set({TestMessage: 'GET Request'})
     res.sendFile(path.join(__dirname, '..', 'public/index.html'))
   })
 
