@@ -19,17 +19,17 @@ router.post('/:username', async (req, res, next) => {
   const url = req.body.url
   const instructs = req.body.instructs
   const username = req.params.username
+  const ref = db.ref(`/wishlist/${username}`)
   try {
-    await db
-      .ref(`/wishlist/${username}`)
+    await ref
       .push({item, url, instructions: instructs})
       .then(function() {
         return db.ref(`/wishlist/${username}`).once('value')
       })
       .then(async function(snapshot) {
         //right now is taking a snapshot of all items at username
-        const newItem = await snapshot.val()
-        res.json(newItem)
+        const newWishList = await snapshot.val()
+        res.json(newWishList)
       })
   } catch (err) {
     next(err)
@@ -44,10 +44,13 @@ router.put('/:username/:id', async (req, res, next) => {
   const id = req.params.id
   const username = req.params.username
   const ref = db.ref(`/wishlist/${username}`)
+
   try {
     ref.child(id).update({item, url, instructions: instructs})
-    const updatedItem = await ref.once('value')
-    res.json(updatedItem)
+    const updatedWishlist = await db
+      .ref(`/wishlist/${username}/${id}`)
+      .once('value')
+    res.json(updatedWishlist)
   } catch (err) {
     next(err)
   }

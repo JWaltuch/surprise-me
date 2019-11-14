@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-// import {Text, View} from 'react-native'
+import Wishlist from './wishlist'
 
 /**
  * COMPONENT
@@ -12,6 +12,7 @@ export const UserHome = props => {
   return (
     <div>
       <h1>Hello, {email}!</h1>
+      <Wishlist />
     </div>
   )
 }
