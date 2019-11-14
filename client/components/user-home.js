@@ -12,7 +12,7 @@ export const UserHome = props => {
 
   return (
     <div>
-      <h1>Hello, {email}!</h1>
+      <h1>Hello, {username}!</h1>
       <Wishlist username={username} />
     </div>
   )

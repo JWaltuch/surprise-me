@@ -18,11 +18,12 @@ router.post('/:username', async (req, res, next) => {
   const item = req.body.item
   const url = req.body.url
   const instructs = req.body.instructs
+  const body = {item, url, instructions: instructs, purchased: false}
   const username = req.params.username
   const ref = db.ref(`/wishlist/${username}`)
   try {
     await ref
-      .push({item, url, instructions: instructs})
+      .push(body)
       .then(function() {
         return db.ref(`/wishlist/${username}`).once('value')
       })
@@ -40,16 +41,15 @@ router.put('/:username/:id', async (req, res, next) => {
   const item = req.body.item
   const url = req.body.url
   const instructs = req.body.instructs
+  const body = {item, url, instructions: instructs, purchased: false}
 
   const id = req.params.id
   const username = req.params.username
   const ref = db.ref(`/wishlist/${username}`)
 
   try {
-    ref.child(id).update({item, url, instructions: instructs})
-    const updatedWishlist = await db
-      .ref(`/wishlist/${username}/${id}`)
-      .once('value')
+    ref.child(id).update(body)
+    const updatedWishlist = await db.ref(`/wishlist/${username}`).once('value')
     res.json(updatedWishlist)
   } catch (err) {
     next(err)

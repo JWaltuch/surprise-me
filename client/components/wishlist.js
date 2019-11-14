@@ -6,6 +6,13 @@ export default class Wishlist extends Component {
   constructor(props) {
     super(props)
     this.state = {wishlist: {}}
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick() {
+    console.log('clicked')
+    //redirect to add form?
+    //put add form on page?
   }
 
   async componentDidMount() {
@@ -20,11 +27,11 @@ export default class Wishlist extends Component {
     }
     return (
       <div>
-        <button>Add Item</button>
+        <button onClick={this.handleClick}>Add Gift</button>
         <h1>My Wishlist</h1>
         {!this.state.wishlist ||
           wishlistKeys.map(id => (
-            <WishlistItem id={id} item={this.state.wishlist[id].item} />
+            <WishlistItem id={id} item={this.state.wishlist[id]} />
           ))}
         {/* Maps over wishlist items, each with update/del button */}
       </div>
