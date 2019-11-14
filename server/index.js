@@ -47,7 +47,7 @@ const createApp = () => {
 
   //firebase config
   var config = {
-    apiKey: 'AIzaSyD5YgeMxjSfBvPPSuQARAPKPZlnwGx9AtU',
+    apiKey: process.env.FIREBASE_API_KEY,
     authDomain: 'surpriseme-ce130.firebaseapp.com',
     databaseURL: 'https://surpriseme-ce130.firebaseio.com',
     projectId: 'surpriseme-ce130',
