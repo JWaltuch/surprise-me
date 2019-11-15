@@ -10,6 +10,7 @@ class UpdateItem extends Component {
     super(props)
     this.state = {item: '', url: '', instructions: ''}
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleDelete = this.handleDelete.bind(this)
   }
 
   async componentDidMount() {
@@ -34,6 +35,13 @@ class UpdateItem extends Component {
     this.props.history.push('/home')
   }
 
+  async handleDelete() {
+    await axios.delete(
+      `/api/wishlist/${this.props.username}/${this.props.match.params.id}`
+    )
+    this.props.history.push(`/home`)
+  }
+
   render() {
     return (
       <div>
@@ -44,6 +52,7 @@ class UpdateItem extends Component {
           instructions={this.state.instructions}
           handleSubmit={this.handleSubmit}
         />
+        <button onClick={this.handleDelete}>Delete Gift From List</button>
       </div>
     )
   }

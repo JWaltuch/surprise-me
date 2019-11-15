@@ -7,10 +7,7 @@ export const WishlistItem = props => {
   const updateClick = () => {
     props.history.push(`${props.username}/update/${props.id}`)
   }
-  const deleteClick = async () => {
-    await axios.delete(`/api/wishlist/${props.username}/${props.id}`)
-    props.history.push(`/home`)
-  }
+
   return (
     <div>
       <h3>Gift: {props.item.item}</h3>
@@ -23,7 +20,6 @@ export const WishlistItem = props => {
         <li>Special Instructions: {props.item.instructions}</li>
       )}
       <button onClick={updateClick}>Edit</button>
-      <button onClick={deleteClick}>Delete</button>
     </div>
   )
 }
