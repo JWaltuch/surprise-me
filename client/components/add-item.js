@@ -8,16 +8,11 @@ import axios from 'axios'
 class AddItem extends Component {
   constructor(props) {
     super(props)
-    this.handleClick = this.handleClick.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentDidMount() {
     this.props.loadInitialData()
-  }
-
-  handleClick() {
-    console.log('clicked')
   }
 
   async handleSubmit(event) {

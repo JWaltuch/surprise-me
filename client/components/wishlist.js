@@ -23,7 +23,6 @@ export default withRouter(
     render() {
       let wishlistKeys
       let wishlist = this.state.wishlist
-      console.log(wishlist)
       if (wishlist) {
         wishlistKeys = Object.keys(wishlist)
       }
