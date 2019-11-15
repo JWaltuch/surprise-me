@@ -3,7 +3,7 @@ const express = require('express')
 const morgan = require('morgan')
 const compression = require('compression')
 const session = require('express-session')
-const passport = require('passport')
+// const passport = require('passport')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
 const sessionStore = new SequelizeStore({db})
@@ -29,39 +29,26 @@ if (process.env.NODE_ENV === 'test') {
 if (process.env.NODE_ENV !== 'production') require('../secrets')
 
 // passport registration
-passport.serializeUser((user, done) => done(null, user.username))
+// passport.serializeUser((user, done) => done(null, user.username))
 
-passport.deserializeUser(async (username, done) => {
-  try {
-    await firebase
-      .database()
-      .ref(`/users/${username}`)
-      .once('value')
-      .then(async function(snapshot) {
-        const data = await snapshot.val()
-        done(null, data)
-      })
-  } catch (err) {
-    done(err)
-  }
-})
+// passport.deserializeUser(async (username, done) => {
+//   try {
+//     await firebase
+//       .database()
+//       .ref(`/users/${username}`)
+//       .once('value')
+//       .then(async function(snapshot) {
+//         const data = await snapshot.val()
+//         done(null, data)
+//       })
+//   } catch (err) {
+//     done(err)
+//   }
+// })
 
 const createApp = () => {
   // logging middleware
   app.use(morgan('dev'))
-
-  //firebase config
-  // var config = {
-  //   apiKey: process.env.FIREBASE_API_KEY,
-  //   authDomain: 'surpriseme-ce130.firebaseapp.com',
-  //   databaseURL: process.env.DATABASE_URL,
-  //   projectId: 'surpriseme-ce130',
-  //   storageBucket: 'surpriseme-ce130.appspot.com',
-  //   messagingSenderId: process.env.MESSAGING_SENDER_ID,
-  //   appId: process.env.APP_ID,
-  //   measurementId: 'G-S6C7MLVB57'
-  // }
-  // firebase.initializeApp(config)
 
   // body parsing middleware
   app.use(express.json())
@@ -79,8 +66,8 @@ const createApp = () => {
       saveUninitialized: false
     })
   )
-  app.use(passport.initialize())
-  app.use(passport.session())
+  // app.use(passport.initialize())
+  // app.use(passport.session())
 
   // auth and api routes
   app.use('/auth', require('./auth'))

@@ -8,15 +8,15 @@ import Wishlist from './wishlist'
  */
 export const UserHome = props => {
   const {email} = props
-  const {username} = props
+  const {displayName} = props
 
   return (
     <div className="goldBox">
-      <h1>Hello, {username}!</h1>
+      <h1>Hello, {displayName}!</h1>
       <div className="homepage-container">
         <div>
           <h2>My Wishlist</h2>
-          <Wishlist username={username} />
+          <Wishlist username={displayName} />
         </div>
         <h2>Users:</h2>
       </div>
@@ -30,7 +30,7 @@ export const UserHome = props => {
 const mapState = state => {
   return {
     email: state.user.email,
-    username: state.user.username
+    displayName: state.user.displayName
   }
 }
 

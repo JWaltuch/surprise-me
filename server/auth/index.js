@@ -1,22 +1,22 @@
 const router = require('express').Router()
 const firebase = require('firebase')
-const crypto = require('crypto')
+// const crypto = require('crypto')
 module.exports = router
 
 // const db = firebase.firestore()
 const db = firebase.database()
 
-const generateSalt = () => {
-  return crypto.randomBytes(16).toString('base64')
-}
+// const generateSalt = () => {
+//   return crypto.randomBytes(16).toString('base64')
+// }
 
-const encryptPassword = (plainText, salt) => {
-  return crypto
-    .createHash('RSA-SHA256')
-    .update(plainText)
-    .update(salt)
-    .digest('hex')
-}
+// const encryptPassword = (plainText, salt) => {
+//   return crypto
+//     .createHash('RSA-SHA256')
+//     .update(plainText)
+//     .update(salt)
+//     .digest('hex')
+// }
 
 router.post('/login', async (req, res, next) => {
   const username = req.body.username
@@ -38,22 +38,23 @@ router.post('/login', async (req, res, next) => {
       })
     console.log('log in', firebase.auth().currentUser)
 
-    await db
-      .ref(`/users/${username}`)
-      .once('value')
-      .then(async function(snapshot) {
-        const data = await snapshot.val()
-        password = encryptPassword(password, data.salt)
-        if (data.username !== username || data.password !== password) {
-          console.log('No such user found:', email)
-          res.status(401).send('Wrong username and/or password')
-        } else if (data.password !== password) {
-          console.log('Incorrect password for user:', email)
-          res.status(401).send('Wrong username and/or password')
-        } else {
-          req.login(data, err => (err ? next(err) : res.json(data)))
-        }
-      })
+    // await db
+    //   .ref(`/users/${username}`)
+    //   .once('value')
+    //   .then(async function(snapshot) {
+    //     const data = await snapshot.val()
+    //     password = encryptPassword(password, data.salt)
+    //     if (data.username !== username || data.password !== password) {
+    //       console.log('No such user found:', email)
+    //       res.status(401).send('Wrong username and/or password')
+    //     } else if (data.password !== password) {
+    //       console.log('Incorrect password for user:', email)
+    //       res.status(401).send('Wrong username and/or password')
+    //     } else {
+    //       req.login(data, err => (err ? next(err) : res.json(data)))
+    //     }
+    //   })
+    res.send('logged in')
   } catch (err) {
     next(err)
   }
@@ -80,19 +81,20 @@ router.post('/signup', async (req, res, next) => {
     await firebase.auth().currentUser.updateProfile({displayName: username})
     console.log(firebase.auth().currentUser)
 
-    const salt = generateSalt()
-    password = encryptPassword(password, salt)
+    // const salt = generateSalt()
+    // password = encryptPassword(password, salt)
 
-    await db
-      .ref(`/users/${username}`)
-      .set({username, email, password, salt})
-      .then(function() {
-        return db.ref(`/users/${username}`).once('value')
-      })
-      .then(async function(snapshot) {
-        const newUser = await snapshot.val()
-        req.login(newUser, err => (err ? next(err) : res.json(newUser)))
-      })
+    // await db
+    //   .ref(`/users/${username}`)
+    //   .set({username, email, password, salt})
+    //   .then(function() {
+    //     return db.ref(`/users/${username}`).once('value')
+    //   })
+    //   .then(async function(snapshot) {
+    //     const newUser = await snapshot.val()
+    //     req.login(newUser, err => (err ? next(err) : res.json(newUser)))
+    //   })
+    res.send('signed up')
   } catch (err) {
     next(err)
   }
@@ -103,19 +105,21 @@ router.post('/logout', async (req, res) => {
     .auth()
     .signOut()
     .then(function() {
+      req.session.destroy()
       res.redirect('/')
     })
     .catch(function(error) {
       console.log(error)
     })
   console.log('logout', firebase.auth().currentUser)
-  req.logout()
-  req.session.destroy()
+  // req.logout()
+  // req.session.destroy()
   // res.redirect('/')
 })
 
-router.get('/me', (req, res) => {
-  res.json(req.user)
+router.get('/me', async (req, res) => {
+  let user = await firebase.auth().currentUser
+  res.json(user)
 })
 
 router.use('/google', require('./google'))

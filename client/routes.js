@@ -8,13 +8,21 @@ import UpdateItem from './components/update-item'
 import {Promised} from './components/promised'
 import SecretWishlist from './components/secret-wishlist'
 import {me} from './store'
+import firebase from '../server/firebase'
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
+  constructor(props) {
+    super(props)
+    // this.isLoggedIn = null
+  }
   componentDidMount() {
     this.props.loadInitialData()
+    // console.log(firebase.auth())
+    // this.isLoggedIn = firebase.auth().currentUser
+    // console.log(this.isLoggedIn)
   }
 
   render() {
@@ -52,7 +60,7 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.username
+    isLoggedIn: !!state.user.displayName
   }
 }
 
