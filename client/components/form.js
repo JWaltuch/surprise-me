@@ -5,24 +5,24 @@ export const Form = props => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} name={item}>
+      <form onSubmit={() => handleSubmit(event)} name={item}>
         <div>
           <label htmlFor="item">
             <small>Gift Name:</small>
           </label>
-          <input name="url" type="text" value={item} />
+          <input name="item" type="text" defaultValue={item} />
         </div>
         <div>
           <label htmlFor="url">
             <small>Link Where To Buy It: (Optional)</small>
           </label>
-          <input name="url" type="text" value={url} />
+          <input name="url" type="text" defaultValue={url} />
         </div>
         <div>
-          <label htmlFor="instructions">
+          <label htmlFor="instructs">
             <small>Special Instructions: (Optional)</small>
           </label>
-          <input name="instructions" type="text" value={instructions} />
+          <input name="instructs" type="text" defaultValue={instructions} />
         </div>
         <div>
           <button type="submit">Add Gift</button>
