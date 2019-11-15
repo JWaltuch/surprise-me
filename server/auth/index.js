@@ -57,7 +57,6 @@ router.post('/logout', async (req, res) => {
     .auth()
     .signOut()
     .then(function() {
-      req.session.destroy()
       res.redirect('/')
     })
     .catch(function(error) {
