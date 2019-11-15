@@ -10,7 +10,8 @@ const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 3000
 const app = express()
 const socketio = require('socket.io')
-var firebase = require('firebase')
+// const firebase = require('firebase')
+const firebase = require('./firebase')
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
@@ -52,17 +53,17 @@ const createApp = () => {
   app.use(morgan('dev'))
 
   //firebase config
-  var config = {
-    apiKey: process.env.FIREBASE_API_KEY,
-    authDomain: 'surpriseme-ce130.firebaseapp.com',
-    databaseURL: process.env.DATABASE_URL,
-    projectId: 'surpriseme-ce130',
-    storageBucket: 'surpriseme-ce130.appspot.com',
-    messagingSenderId: process.env.MESSAGING_SENDER_ID,
-    appId: process.env.APP_ID,
-    measurementId: 'G-S6C7MLVB57'
-  }
-  firebase.initializeApp(config)
+  // var config = {
+  //   apiKey: process.env.FIREBASE_API_KEY,
+  //   authDomain: 'surpriseme-ce130.firebaseapp.com',
+  //   databaseURL: process.env.DATABASE_URL,
+  //   projectId: 'surpriseme-ce130',
+  //   storageBucket: 'surpriseme-ce130.appspot.com',
+  //   messagingSenderId: process.env.MESSAGING_SENDER_ID,
+  //   appId: process.env.APP_ID,
+  //   measurementId: 'G-S6C7MLVB57'
+  // }
+  // firebase.initializeApp(config)
 
   // body parsing middleware
   app.use(express.json())

@@ -2,9 +2,14 @@ import React, {Component} from 'react'
 import {WishlistItem} from './wishlist-item'
 import {withRouter} from 'react-router-dom'
 import axios from 'axios'
-// import firebase from 'firebase'
+import firebase from '../../server/firebase'
+const db = firebase.database()
+// import {db} from '../../server/api/wishlist'
+// import app from 'firebase/app'
 
-// const config = {
+//to use config with secrets, just import secrets. duh
+// if (process.env.NODE_ENV !== 'production') require('../secrets')
+// var config = {
 //   apiKey: process.env.FIREBASE_API_KEY,
 //   authDomain: 'surpriseme-ce130.firebaseapp.com',
 //   databaseURL: process.env.DATABASE_URL,
@@ -14,8 +19,6 @@ import axios from 'axios'
 //   appId: process.env.APP_ID,
 //   measurementId: 'G-S6C7MLVB57'
 // }
-// firebase.initializeApp(config)
-// const wishlistData = firebase.database().ref()
 
 export default withRouter(
   class Wishlist extends Component {
@@ -23,6 +26,8 @@ export default withRouter(
       super(props)
       this.state = {wishlist: {}}
       this.handleClick = this.handleClick.bind(this)
+      // app.initializeApp(config)
+      // this.db = app.database()
     }
 
     handleClick() {
@@ -32,8 +37,14 @@ export default withRouter(
     async componentDidMount() {
       const {data} = await axios.get(`/api/wishlist/${this.props.username}`)
       this.setState({wishlist: data})
-
-      // console.log(wishlistData)
+      const wishlistData = db.ref(`wishlist/${this.props.username}`)
+      wishlistData.on('value', async snapshot => {
+        console.log('snapped', wishlistData)
+        const res = await axios.get(`/api/wishlist/${this.props.username}`)
+        this.setState({wishlist: res.data})
+        // this.setState({wishlist: snapshot})
+      })
+      console.log(wishlistData)
     }
 
     render() {
