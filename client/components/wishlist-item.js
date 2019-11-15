@@ -1,11 +1,13 @@
 import React from 'react'
-import axios from 'axios'
-import {withRouter} from 'react-router-dom'
 
-//props are id, item, history and username
+//props are id, item, history, match and username
 export const WishlistItem = props => {
   const updateClick = () => {
     props.history.push(`${props.username}/update/${props.id}`)
+  }
+
+  const commitClick = () => {
+    props.history.push(`${props.username}/promise/${props.id}`)
   }
 
   return (
@@ -19,7 +21,14 @@ export const WishlistItem = props => {
       {!props.item.instructions || (
         <li>Special Instructions: {props.item.instructions}</li>
       )}
-      <button onClick={updateClick}>Edit</button>
+      {props.match.params.username !== props.username ? (
+        <button onClick={updateClick}>Edit</button>
+      ) : (
+        <div>
+          Click here to commit to getting this present! No take backs!
+          <button onClick={commitClick}>Promise</button>
+        </div>
+      )}
     </div>
   )
 }

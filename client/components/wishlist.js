@@ -22,22 +22,30 @@ export default withRouter(
 
     render() {
       let wishlistKeys
-      if (this.state.wishlist) {
-        wishlistKeys = Object.keys(this.state.wishlist)
+      let wishlist = this.state.wishlist
+      console.log(wishlist)
+      if (wishlist) {
+        wishlistKeys = Object.keys(wishlist)
       }
       return (
         <div>
-          <button onClick={this.handleClick}>Add Gift</button>
-          <h1>My Wishlist</h1>
-          {!this.state.wishlist ||
+          {this.props.match.params.username !== this.props.username && (
+            <button onClick={this.handleClick}>Add Gift</button>
+          )}
+          <h1>Wishlist</h1>
+          {!wishlist ||
             wishlistKeys.map(id => (
-              <WishlistItem
-                key={id}
-                id={id}
-                item={this.state.wishlist[id]}
-                username={this.props.username}
-                history={this.props.history}
-              />
+              <div key={id}>
+                {wishlist[id].purchased === false && (
+                  <WishlistItem
+                    id={id}
+                    item={wishlist[id]}
+                    username={this.props.username}
+                    history={this.props.history}
+                    match={this.props.match}
+                  />
+                )}
+              </div>
             ))}
         </div>
       )

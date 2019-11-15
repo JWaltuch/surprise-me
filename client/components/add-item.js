@@ -34,8 +34,19 @@ class AddItem extends Component {
   render() {
     return (
       <div>
-        <h1>Add Gift: </h1>
-        <Form item="" url="" instructions="" handleSubmit={this.handleSubmit} />
+        {this.props.username === this.props.match.params.username ? (
+          <div>
+            <h1>Add Gift: </h1>
+            <Form
+              item=""
+              url=""
+              instructions=""
+              handleSubmit={this.handleSubmit}
+            />
+          </div>
+        ) : (
+          <div>You do not have permission to modify this list!</div>
+        )}
       </div>
     )
   }

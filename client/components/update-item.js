@@ -45,14 +45,20 @@ class UpdateItem extends Component {
   render() {
     return (
       <div>
-        <h1>Update Gift Listing: </h1>
-        <Form
-          item={this.state.item}
-          url={this.state.url}
-          instructions={this.state.instructions}
-          handleSubmit={this.handleSubmit}
-        />
-        <button onClick={this.handleDelete}>Delete Gift From List</button>
+        {this.props.username === this.props.match.params.username ? (
+          <div>
+            <h1>Update Gift Listing: </h1>
+            <Form
+              item={this.state.item}
+              url={this.state.url}
+              instructions={this.state.instructions}
+              handleSubmit={this.handleSubmit}
+            />
+            <button onClick={this.handleDelete}>Delete Gift From List</button>
+          </div>
+        ) : (
+          <div>You do not have permission to modify this list!</div>
+        )}
       </div>
     )
   }

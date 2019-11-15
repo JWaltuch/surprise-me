@@ -48,6 +48,20 @@ router.post('/:username', async (req, res, next) => {
   }
 })
 
+router.put('/:username/promise/:id', async (req, res, next) => {
+  const id = req.params.id
+  const username = req.params.username
+  const ref = db.ref(`/wishlist/${username}`)
+
+  try {
+    ref.child(id).update({purchased: true})
+    const updatedWishlist = await db.ref(`/wishlist/${username}`).once('value')
+    res.json(updatedWishlist)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.put('/:username/:id', async (req, res, next) => {
   const item = req.body.item
   const url = req.body.url
