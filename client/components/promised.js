@@ -17,7 +17,7 @@ export const Promised = withRouter(props => {
   }
 
   return (
-    <div>
+    <div className="goldBox">
       {props.match.params.username !== props.username ? (
         <div>
           Are you absolutely SURE you want to commit to this? Once you click

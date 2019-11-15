@@ -28,7 +28,7 @@ class AddItem extends Component {
 
   render() {
     return (
-      <div>
+      <div className="goldBox">
         {this.props.username === this.props.match.params.username ? (
           <div>
             <h1>Add Gift: </h1>

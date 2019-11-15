@@ -11,9 +11,15 @@ export const UserHome = props => {
   const {username} = props
 
   return (
-    <div>
+    <div className="goldBox">
       <h1>Hello, {username}!</h1>
-      <Wishlist username={username} />
+      <div className="homepage-container">
+        <div>
+          <h2>My Wishlist</h2>
+          <Wishlist username={username} />
+        </div>
+        <h2>Users:</h2>
+      </div>
     </div>
   )
 }

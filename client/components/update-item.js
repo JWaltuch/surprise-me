@@ -44,7 +44,7 @@ class UpdateItem extends Component {
 
   render() {
     return (
-      <div>
+      <div className="goldBox">
         {this.props.username === this.props.match.params.username ? (
           <div>
             <h1>Update Gift Listing: </h1>

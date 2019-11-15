@@ -8,7 +8,7 @@ const SecretWishlist = props => {
   const {username} = props.match.params
 
   return (
-    <div>
+    <div className="goldBox">
       {username !== props.username ? (
         <div>
           <h1>Choose something to make {username}'s day!</h1>

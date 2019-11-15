@@ -1,5 +1,6 @@
 body {
   font-family: sans-serif;
+  background-color: rgb(179, 63, 63);
 }
 
 a {
@@ -18,4 +19,22 @@ nav a {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+/* custom */
+
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.goldBox {
+  background-color: rgb(222, 207, 123);
+  padding: 10px 10px 10px 10px;
+}
+
+.homepage-container {
+  display: flex;
+  justify-content: space-around;
 }
