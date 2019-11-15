@@ -14,11 +14,22 @@ router.get('/:username', async (req, res, next) => {
   }
 })
 
+router.get('/:username/:id', async (req, res, next) => {
+  try {
+    const item = await db
+      .ref(`/wishlist/${req.params.username}/${req.params.id}`)
+      .once('value')
+    res.json(item)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.post('/:username', async (req, res, next) => {
   const item = req.body.item
   const url = req.body.url
-  const instructs = req.body.instructs
-  const body = {item, url, instructions: instructs, purchased: false}
+  const instructions = req.body.instructions
+  const body = {item, url, instructions, purchased: false}
   const username = req.params.username
   const ref = db.ref(`/wishlist/${username}`)
   try {
@@ -40,8 +51,8 @@ router.post('/:username', async (req, res, next) => {
 router.put('/:username/:id', async (req, res, next) => {
   const item = req.body.item
   const url = req.body.url
-  const instructs = req.body.instructs
-  const body = {item, url, instructions: instructs, purchased: false}
+  const instructions = req.body.instructions
+  const body = {item, url, instructions, purchased: false}
 
   const id = req.params.id
   const username = req.params.username

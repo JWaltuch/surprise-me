@@ -19,13 +19,13 @@ export const Form = props => {
           <input name="url" type="text" defaultValue={url} />
         </div>
         <div>
-          <label htmlFor="instructs">
+          <label htmlFor="instructions">
             <small>Special Instructions: (Optional)</small>
           </label>
-          <input name="instructs" type="text" defaultValue={instructions} />
+          <input name="instructions" type="text" defaultValue={instructions} />
         </div>
         <div>
-          <button type="submit">Add Gift</button>
+          <button type="submit">Submit</button>
         </div>
       </form>
     </div>

@@ -1,10 +1,15 @@
 import React from 'react'
+import axios from 'axios'
 import {withRouter} from 'react-router-dom'
 
 //props are id, item, history and username
 export const WishlistItem = props => {
   const updateClick = () => {
-    props.history.push(`${props.username}/update`)
+    props.history.push(`${props.username}/update/${props.id}`)
+  }
+  const deleteClick = async () => {
+    await axios.delete(`/api/wishlist/${props.username}/${props.id}`)
+    props.history.push(`/home`)
   }
   return (
     <div>
@@ -18,7 +23,7 @@ export const WishlistItem = props => {
         <li>Special Instructions: {props.item.instructions}</li>
       )}
       <button onClick={updateClick}>Edit</button>
-      <button>Delete</button>
+      <button onClick={deleteClick}>Delete</button>
     </div>
   )
 }

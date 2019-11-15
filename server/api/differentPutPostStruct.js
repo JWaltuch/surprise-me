@@ -18,8 +18,8 @@ const updateList = (type, username, id, body) => {
 router.post('/:username', async (req, res, next) => {
   const item = req.body.item
   const url = req.body.url
-  const instructs = req.body.instructs
-  const body = {item, url, instructions: instructs}
+  const instructions = req.body.instructions
+  const body = {item, url, instructions}
   const username = req.params.username
   try {
     createList('secretWishlist', username, body)
@@ -35,8 +35,8 @@ router.post('/:username', async (req, res, next) => {
 router.put('/:username/:id', async (req, res, next) => {
   const item = req.body.item
   const url = req.body.url
-  const instructs = req.body.instructs
-  const body = {item, url, instructions: instructs}
+  const instructions = req.body.instructions
+  const body = {item, url, instructions: instructions}
 
   const id = req.params.id
   const username = req.params.username

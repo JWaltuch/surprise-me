@@ -5,19 +5,19 @@ import {connect} from 'react-redux'
 import {me} from '../store'
 import axios from 'axios'
 
-class AddItem extends Component {
+class UpdateItem extends Component {
   constructor(props) {
     super(props)
-    this.handleClick = this.handleClick.bind(this)
+    this.state = {item: '', url: '', instructions: ''}
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.props.loadInitialData()
-  }
-
-  handleClick() {
-    console.log('clicked')
+    let {data} = await axios.get(
+      `/api/wishlist/${this.props.username}/${this.props.match.params.id}`
+    )
+    this.setState(data)
   }
 
   async handleSubmit(event) {
@@ -25,17 +25,25 @@ class AddItem extends Component {
     const body = {
       item: event.target.item.value,
       url: event.target.url.value,
-      instructs: event.target.instructs.value
+      instructions: event.target.instructions.value
     }
-    await axios.post(`/api/wishlist/${this.props.username}`, body)
+    await axios.put(
+      `/api/wishlist/${this.props.username}/${this.props.match.params.id}`,
+      body
+    )
     this.props.history.push('/home')
   }
 
   render() {
     return (
       <div>
-        <h1>Add Gift: </h1>
-        <Form item="" url="" instructions="" handleSubmit={this.handleSubmit} />
+        <h1>Update Gift Listing: </h1>
+        <Form
+          item={this.state.item}
+          url={this.state.url}
+          instructions={this.state.instructions}
+          handleSubmit={this.handleSubmit}
+        />
       </div>
     )
   }
@@ -55,6 +63,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-// The `withRouter` wrapper makes sure that updates are not blocked
-// when the url changes
-export default withRouter(connect(mapState, mapDispatch)(AddItem))
+export default withRouter(connect(mapState, mapDispatch)(UpdateItem))

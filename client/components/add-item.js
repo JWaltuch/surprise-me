@@ -25,7 +25,7 @@ class AddItem extends Component {
     const body = {
       item: event.target.item.value,
       url: event.target.url.value,
-      instructs: event.target.instructs.value
+      instructions: event.target.instructions.value
     }
     await axios.post(`/api/wishlist/${this.props.username}`, body)
     this.props.history.push('/home')
