@@ -47,6 +47,11 @@ export default withRouter(
       console.log(wishlistData)
     }
 
+    componentWillUnmount() {
+      const wishlistData = db.ref(`wishlist/${this.props.username}`)
+      wishlistData.off()
+    }
+
     render() {
       let wishlistKeys
       let wishlist = this.state.wishlist
