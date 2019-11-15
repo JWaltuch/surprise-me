@@ -26,8 +26,7 @@ export default withRouter(
       super(props)
       this.state = {wishlist: {}}
       this.handleClick = this.handleClick.bind(this)
-      // app.initializeApp(config)
-      // this.db = app.database()
+      this.wishlistData = db.ref(`wishlist/${this.props.username}`)
     }
 
     handleClick() {
@@ -37,19 +36,13 @@ export default withRouter(
     async componentDidMount() {
       const {data} = await axios.get(`/api/wishlist/${this.props.username}`)
       this.setState({wishlist: data})
-      const wishlistData = db.ref(`wishlist/${this.props.username}`)
-      wishlistData.on('value', async snapshot => {
-        console.log('snapped', wishlistData)
-        const res = await axios.get(`/api/wishlist/${this.props.username}`)
-        this.setState({wishlist: res.data})
-        // this.setState({wishlist: snapshot})
+      this.wishlistData.on('value', snapshot => {
+        this.setState({wishlist: snapshot.val()})
       })
-      console.log(wishlistData)
     }
 
     componentWillUnmount() {
-      const wishlistData = db.ref(`wishlist/${this.props.username}`)
-      wishlistData.off()
+      this.wishlistData.off()
     }
 
     render() {
