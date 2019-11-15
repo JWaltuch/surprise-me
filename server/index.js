@@ -55,11 +55,11 @@ const createApp = () => {
   var config = {
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: 'surpriseme-ce130.firebaseapp.com',
-    databaseURL: 'https://surpriseme-ce130.firebaseio.com',
+    databaseURL: process.env.DATABASE_URL,
     projectId: 'surpriseme-ce130',
     storageBucket: 'surpriseme-ce130.appspot.com',
-    messagingSenderId: '880304328557',
-    appId: '1:880304328557:web:748b9cd854a8ad82ff1464',
+    messagingSenderId: process.env.MESSAGING_SENDER_ID,
+    appId: process.env.APP_ID,
     measurementId: 'G-S6C7MLVB57'
   }
   firebase.initializeApp(config)
