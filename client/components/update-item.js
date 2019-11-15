@@ -66,7 +66,7 @@ class UpdateItem extends Component {
 
 const mapState = state => {
   return {
-    username: state.user.username
+    username: state.user.displayName
   }
 }
 
