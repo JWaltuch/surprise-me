@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 
 //props are id, item, history, match and username
 export const WishlistItem = props => {
@@ -8,6 +9,10 @@ export const WishlistItem = props => {
 
   const commitClick = () => {
     props.history.push(`${props.username}/promise/${props.id}`)
+  }
+
+  const handleDelete = async () => {
+    await axios.delete(`/api/wishlist/${props.username}/${props.id}`)
   }
 
   return (
@@ -22,7 +27,11 @@ export const WishlistItem = props => {
         <li>Special Instructions: {props.item.instructions}</li>
       )}
       {props.match.params.username !== props.username ? (
-        <button onClick={updateClick}>Edit</button>
+        <div>
+          {' '}
+          <button onClick={updateClick}>Edit</button>
+          <button onClick={handleDelete}>Delete Gift From List</button>
+        </div>
       ) : (
         <div>
           Click here to commit to getting this present! No take backs!
