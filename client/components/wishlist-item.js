@@ -1,27 +1,29 @@
 import React from 'react'
 import axios from 'axios'
 
-//props are id, item, history, match and username
+//props are id, item, history, match and currentUser
 export const WishlistItem = props => {
   const item = props.item.item
   const url = props.item.url || ''
   const instructions = props.item.instructions || ''
-  const giftReceiver = props.match.params.username
   const body = {item, url, instructions, username: props.currentUser}
+  const userToView =
+    props.match.params.username !== props.currentUser &&
+    props.match.params.username
+      ? props.match.params.username
+      : props.currentUser
 
   const updateClick = () => {
-    props.history.push(`${props.username}/update/${props.id}`)
+    props.history.push(`${userToView}/update/${props.id}`)
   }
 
   //makes request that adds to users promise list and turns purchased on users wishlist to null
   const promiseClick = async () => {
-    // props.history.push(`${props.username}/promise/${props.id}`)
-    console.log(props.username)
-    await axios.post(`/api/promises/${props.username}/${props.id}`, body)
+    await axios.post(`/api/promises/${userToView}/${props.id}`, body)
   }
 
   const handleDelete = async () => {
-    await axios.delete(`/api/wishlist/${props.username}/${props.id}`)
+    await axios.delete(`/api/wishlist/${userToView}/${props.id}`)
   }
 
   return (
@@ -33,7 +35,7 @@ export const WishlistItem = props => {
         </li>
       )}
       {!instructions || <li>Special Instructions: {instructions}</li>}
-      {giftReceiver !== props.username ? (
+      {userToView === props.currentUser ? (
         <div>
           {' '}
           <button onClick={updateClick}>Edit</button>
@@ -41,7 +43,7 @@ export const WishlistItem = props => {
         </div>
       ) : (
         <div>
-          I will get this present for {giftReceiver}
+          I will get this present for {userToView}
           <button onClick={promiseClick}>Promise</button>
         </div>
       )}

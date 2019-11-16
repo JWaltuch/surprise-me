@@ -17,7 +17,7 @@ export const UserHome = props => {
       <div className="homepage-container">
         <div>
           <h2>My Wishlist</h2>
-          <Wishlist username={displayName} />
+          <Wishlist currentUser={displayName} />
         </div>
         <Users />
       </div>

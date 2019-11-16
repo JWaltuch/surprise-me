@@ -11,15 +11,20 @@ export default withRouter(
       super(props)
       this.state = {wishlist: {}}
       this.handleClick = this.handleClick.bind(this)
-      this.wishlistData = db.ref(`wishlist/${this.props.username}`)
+      this.userToView =
+        this.props.match.params.username !== this.props.currentUser &&
+        this.props.match.params.username
+          ? this.props.match.params.username
+          : this.props.currentUser
+      this.wishlistData = db.ref(`wishlist/${this.userToView}`)
     }
 
     handleClick() {
-      this.props.history.push(`${this.props.username}/add`)
+      this.props.history.push(`${this.userToView}/add`)
     }
 
     async componentDidMount() {
-      const {data} = await axios.get(`/api/wishlist/${this.props.username}`)
+      const {data} = await axios.get(`/api/wishlist/${this.userToView}`)
       this.setState({wishlist: data})
       this.wishlistData.on('value', snapshot => {
         this.setState({wishlist: snapshot.val()})
@@ -38,17 +43,16 @@ export default withRouter(
       }
       return (
         <div>
-          {this.props.match.params.username !== this.props.currentUser && (
+          {!this.props.match.params.username && (
             <button onClick={this.handleClick}>Add Gift</button>
           )}
-          {!wishlist ||
+          {wishlist &&
             wishlistKeys.map(id => (
               <div key={id}>
                 {wishlist[id].purchased === false && (
                   <WishlistItem
                     id={id}
                     item={wishlist[id]}
-                    username={this.props.username}
                     history={this.props.history}
                     match={this.props.match}
                     currentUser={this.props.currentUser}
