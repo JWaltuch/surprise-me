@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Wishlist from './wishlist'
+import Users from './users'
 
 /**
  * COMPONENT
@@ -12,13 +13,13 @@ export const UserHome = props => {
 
   return (
     <div className="goldBox">
-      <h1>Hello, {displayName}!</h1>
+      <h1 className="greeting-header">Hello, {displayName}!</h1>
       <div className="homepage-container">
         <div>
           <h2>My Wishlist</h2>
           <Wishlist username={displayName} />
         </div>
-        <h2>Users:</h2>
+        <Users />
       </div>
     </div>
   )

@@ -6,7 +6,7 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     await db
-      .ref(`/users`)
+      .ref(`/wishlist`)
       .once('value')
       .then(async function(snapshot) {
         const users = await snapshot.val()
