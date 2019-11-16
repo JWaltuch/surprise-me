@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {withRouter, Link} from 'react-router-dom'
+import {SearchBar} from './search-bar'
 import axios from 'axios'
 
 export default withRouter(
@@ -18,6 +19,7 @@ export default withRouter(
       return (
         <div>
           <h2>Users: </h2>
+          <SearchBar />
           {this.state.users[0] && (
             <div>
               {this.state.users.map(user => {
