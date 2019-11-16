@@ -30,16 +30,16 @@ router.post('/:username/:id', async (req, res, next) => {
   const url = req.body.url
   const instructions = req.body.instructions
   const username = req.body.username
-  const promisesRef = db.ref(`/promises/${username}`)
-
   const id = req.params.id
+  const promisesRef = db.ref(`/promises/${username}/${id}`)
+
   const giftReceiver = req.params.username
   const wishlistRef = db.ref(`/wishlist/${giftReceiver}`)
 
   const body = {item, url, instructions, promised: true, for: giftReceiver}
 
   try {
-    await promisesRef.set({[id]: body})
+    await promisesRef.set(body)
     wishlistRef.child(id).update({promised: true})
     const updatedWishlist = await db
       .ref(`/wishlist/${giftReceiver}`)
