@@ -7,6 +7,7 @@ import AddItem from './components/add-item'
 import UpdateItem from './components/update-item'
 import {Promised} from './components/promised'
 import SecretWishlist from './components/secret-wishlist'
+import Users from './components/users'
 import {me} from './store'
 import firebase from '../server/firebase'
 
@@ -40,6 +41,7 @@ class Routes extends Component {
               {<Redirect to="/home" />}
             </Route>
             <Route path="/home" component={UserHome} />
+            <Route path="/users" component={Users} />
             <Route path="/:username/add" component={AddItem} />
             <Route path="/:username/update/:id" component={UpdateItem} />
             <Route path="/:username/promise/:id" component={Promised} />

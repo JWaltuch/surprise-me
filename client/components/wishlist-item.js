@@ -3,12 +3,21 @@ import axios from 'axios'
 
 //props are id, item, history, match and username
 export const WishlistItem = props => {
+  const item = props.item.item
+  const url = props.item.url || ''
+  const instructions = props.item.instructions || ''
+  const giftReceiver = props.match.params.username
+  const body = {item, url, instructions, username: props.currentUser}
+
   const updateClick = () => {
     props.history.push(`${props.username}/update/${props.id}`)
   }
 
-  const commitClick = () => {
-    props.history.push(`${props.username}/promise/${props.id}`)
+  //makes request that adds to users promise list and turns purchased on users wishlist to null
+  const promiseClick = async () => {
+    // props.history.push(`${props.username}/promise/${props.id}`)
+    console.log(props.username)
+    await axios.post(`/api/promises/${props.username}/${props.id}`, body)
   }
 
   const handleDelete = async () => {
@@ -17,16 +26,14 @@ export const WishlistItem = props => {
 
   return (
     <div>
-      <h3>Gift: {props.item.item}</h3>
-      {!props.item.url || (
+      <h3>Gift: {item}</h3>
+      {!url || (
         <li>
-          <a href={props.item.url}>Link</a>
+          <a href={url}>Link</a>
         </li>
       )}
-      {!props.item.instructions || (
-        <li>Special Instructions: {props.item.instructions}</li>
-      )}
-      {props.match.params.username !== props.username ? (
+      {!instructions || <li>Special Instructions: {instructions}</li>}
+      {giftReceiver !== props.username ? (
         <div>
           {' '}
           <button onClick={updateClick}>Edit</button>
@@ -34,8 +41,8 @@ export const WishlistItem = props => {
         </div>
       ) : (
         <div>
-          Click here to commit to getting this present! No take backs!
-          <button onClick={commitClick}>Promise</button>
+          I will get this present for {giftReceiver}
+          <button onClick={promiseClick}>Promise</button>
         </div>
       )}
     </div>

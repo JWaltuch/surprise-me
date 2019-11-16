@@ -1,27 +1,52 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {me} from '../store'
 import Wishlist from './wishlist'
+import axios from 'axios'
 
-const SecretWishlist = props => {
-  const {username} = props.match.params
+class SecretWishlist extends Component {
+  constructor(props) {
+    super(props)
+    this.username = props.match.params.username
+    this.state = {users: []}
+  }
 
-  return (
-    <div className="goldBox">
-      {username !== props.username ? (
-        <div>
-          <h1>Choose something to make {username}'s day!</h1>
-          <Wishlist username={username} />
-        </div>
-      ) : (
-        <div>
-          You're spoiling all the fun! You can't see what people are getting
-          you! Go away!
-        </div>
-      )}
-    </div>
-  )
+  async componentDidMount() {
+    this.props.loadInitialData()
+    const {data} = await axios.get('/api/users')
+    this.setState({users: Object.keys(data)})
+  }
+
+  render() {
+    return (
+      <div className="goldBox">
+        {this.state.users.includes(this.username) ? (
+          <div>
+            {this.username !== this.props.username ? (
+              <div>
+                <h1>Choose something to make {this.username}'s day!</h1>
+                <Wishlist
+                  username={this.username}
+                  currentUser={this.props.username}
+                />
+              </div>
+            ) : (
+              <div>
+                You're spoiling all the fun! You can't see what people are
+                getting you! Go away!
+              </div>
+            )}
+          </div>
+        ) : (
+          <div>
+            That user does not exist. Use the navbar to find what you're looking
+            for!
+          </div>
+        )}
+      </div>
+    )
+  }
 }
 
 const mapState = state => {

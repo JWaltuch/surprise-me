@@ -38,7 +38,7 @@ export default withRouter(
       }
       return (
         <div>
-          {this.props.match.params.username !== this.props.username && (
+          {this.props.match.params.username !== this.props.currentUser && (
             <button onClick={this.handleClick}>Add Gift</button>
           )}
           {!wishlist ||
@@ -51,6 +51,7 @@ export default withRouter(
                     username={this.props.username}
                     history={this.props.history}
                     match={this.props.match}
+                    currentUser={this.props.currentUser}
                   />
                 )}
               </div>
