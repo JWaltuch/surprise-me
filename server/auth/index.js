@@ -2,7 +2,7 @@ const router = require('express').Router()
 const firebase = require('firebase')
 module.exports = router
 
-const db = firebase.database()
+// const db = firebase.database()
 
 router.post('/login', async (req, res, next) => {
   const email = req.body.email
@@ -13,12 +13,11 @@ router.post('/login', async (req, res, next) => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .catch(function(error) {
-        var errorCode = error.code
-        var errorMessage = error.message
-        if (errorCode === 'auth/wrong-password') {
-          console.log('Wrong password.')
+        if (error.code === 'auth/wrong-password') {
+          error.message = 'Wrong password.'
+          return next(error)
         } else {
-          console.log(errorMessage)
+          return next(error)
         }
       })
     res.send(firebase.auth().currentUser)
@@ -31,22 +30,40 @@ router.post('/signup', async (req, res, next) => {
   try {
     const username = req.body.username
     const email = req.body.email
-    let password = req.body.password
+    const password = req.body.password
+    let userExists = null
 
     await firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .catch(function(error) {
-        var errorCode = error.code
-        var errorMessage = error.message
-        if (errorCode === 'auth/weak-password') {
-          res.send('The password is too weak')
-        } else {
-          res.send(errorMessage)
-        }
+      .database()
+      .ref(`/wishlist/${username}`)
+      .once('value')
+      .then(function(snapshot) {
+        userExists = snapshot.val()
       })
-    await firebase.auth().currentUser.updateProfile({displayName: username})
-    res.send(firebase.auth().currentUser)
+
+    if (!username) {
+      let error = new Error()
+      error.message = 'Username cannot be empty'
+      return next(error)
+    } else if (userExists) {
+      let error = new Error()
+      error.message = 'That username is taken'
+      return next(error)
+    } else {
+      await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .catch(function(error) {
+          if (error.code === 'auth/weak-password') {
+            error.message = 'The password is too weak'
+            return next(error)
+          } else {
+            return next(error)
+          }
+        })
+      await firebase.auth().currentUser.updateProfile({displayName: username})
+      res.send(firebase.auth().currentUser)
+    }
   } catch (err) {
     next(err)
   }
