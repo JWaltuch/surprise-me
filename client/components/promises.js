@@ -43,7 +43,7 @@ export default withRouter(
         promisesKeys = Object.keys(promises)
       }
       return (
-        <div className="goldBox">
+        <div className="goldBox list-container">
           {promises ? (
             promisesKeys.map(id => (
               <div key={id}>

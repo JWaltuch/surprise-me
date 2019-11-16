@@ -34,8 +34,9 @@ export const WishlistItem = props => {
   }
 
   return (
-    <div>
+    <div className="list-container-item">
       <h3>Gift: {item}</h3>
+      <img src="http://placekitten.com/100/100" />
       {!url || (
         <li>
           <a href={url}>Link</a>

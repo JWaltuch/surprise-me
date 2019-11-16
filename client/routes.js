@@ -5,7 +5,6 @@ import PropTypes from 'prop-types'
 import {Login, Signup, UserHome} from './components'
 import AddItem from './components/add-item'
 import UpdateItem from './components/update-item'
-import {Promised} from './components/promised'
 import SecretWishlist from './components/secret-wishlist'
 import Users from './components/users'
 import {me} from './store'
@@ -44,7 +43,6 @@ class Routes extends Component {
             <Route path="/users" component={Users} />
             <Route path="/:username/add" component={AddItem} />
             <Route path="/:username/update/:id" component={UpdateItem} />
-            <Route path="/:username/promise/:id" component={Promised} />
             <Route path="/:username" component={SecretWishlist} />
           </Switch>
         )}

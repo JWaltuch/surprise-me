@@ -13,14 +13,14 @@ export const UserHome = props => {
 
   return (
     <div className="goldBox">
-      <h1 className="greeting-header">Hello, {displayName}!</h1>
+      <h1 className="center-text">Hello, {displayName}!</h1>
       <div className="homepage-container">
         <div>
-          <h2>My Wishlist:</h2>
+          <h2 className="center-text">My Wishlist:</h2>
           <Wishlist currentUser={displayName} />
         </div>
         <div>
-          <h2>Promises:</h2>
+          <h2 className="center-text">Promises:</h2>
           <Promises currentUser={displayName} />
         </div>
       </div>
