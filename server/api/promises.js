@@ -39,15 +39,7 @@ router.post('/:username/:id', async (req, res, next) => {
   const body = {item, url, instructions, promised: true, for: giftReceiver}
 
   try {
-    await promisesRef
-      .set({[id]: body})
-      .then(function() {
-        return promisesRef.once('value')
-      })
-      .then(async function(snapshot) {
-        //right now is taking a snapshot of all items at username
-        const newPromises = await snapshot.val()
-      })
+    await promisesRef.set({[id]: body})
     wishlistRef.child(id).update({promised: true})
     const updatedWishlist = await db
       .ref(`/wishlist/${giftReceiver}`)
@@ -58,13 +50,18 @@ router.post('/:username/:id', async (req, res, next) => {
   }
 })
 
-router.delete('/:username/:id', async (req, res, next) => {
+router.delete('/:username/:giftReceiver/:id', async (req, res, next) => {
   const id = req.params.id
   const username = req.params.username
-  const ref = db.ref(`/promises/${username}/${id}`)
+  const promisesRef = db.ref(`/promises/${username}/${id}`)
+
+  const giftReceiver = req.params.giftReceiver
+  const wishlistRef = db.ref(`/wishlist/${giftReceiver}`)
+
   try {
-    const removedItem = await ref.once('value')
-    await ref.remove()
+    wishlistRef.child(id).update({promised: false})
+    const removedItem = await promisesRef.once('value')
+    await promisesRef.remove()
     res.json(removedItem)
   } catch (err) {
     next(err)

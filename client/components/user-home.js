@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import Wishlist from './wishlist'
-import Users from './users'
+import Promises from './promises'
 
 /**
  * COMPONENT
@@ -16,10 +16,11 @@ export const UserHome = props => {
       <h1 className="greeting-header">Hello, {displayName}!</h1>
       <div className="homepage-container">
         <div>
-          <h2>My Wishlist</h2>
+          <h2>My Wishlist:</h2>
           <Wishlist currentUser={displayName} />
         </div>
-        <Users />
+        <h2>Promises:</h2>
+        <Promises currentUser={displayName} />
       </div>
     </div>
   )
