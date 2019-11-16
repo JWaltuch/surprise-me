@@ -44,7 +44,7 @@ export default withRouter(
       }
       return (
         <div className="goldBox">
-          {promises &&
+          {promises ? (
             promisesKeys.map(id => (
               <div key={id}>
                 <PromisesItem
@@ -55,7 +55,10 @@ export default withRouter(
                   currentUser={this.props.currentUser}
                 />
               </div>
-            ))}
+            ))
+          ) : (
+            <div>You have not promised gifts to anyone.</div>
+          )}
         </div>
       )
     }
