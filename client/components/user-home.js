@@ -8,7 +8,6 @@ import Promises from './promises'
  * COMPONENT
  */
 export const UserHome = props => {
-  const {email} = props
   const {displayName} = props
 
   return (
@@ -33,7 +32,6 @@ export const UserHome = props => {
  */
 const mapState = state => {
   return {
-    email: state.user.email,
     displayName: state.user.displayName
   }
 }
@@ -44,6 +42,5 @@ export default connect(mapState)(UserHome)
  * PROP TYPES
  */
 UserHome.propTypes = {
-  email: PropTypes.string,
-  username: PropTypes.string
+  displayName: PropTypes.string
 }
