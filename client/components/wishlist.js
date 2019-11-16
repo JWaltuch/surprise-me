@@ -11,11 +11,16 @@ export default withRouter(
       super(props)
       this.state = {wishlist: {}}
       this.handleClick = this.handleClick.bind(this)
+      //if the user in the uri is the current user, or there is no
+      //user in the params (so user is "home"), set the user whose list
+      //we want to view to be the current, logged in user. otherwise,
+      //set the user whose list we want to view to be the user in the uri
       this.userToView =
         this.props.match.params.username !== this.props.currentUser &&
         this.props.match.params.username
           ? this.props.match.params.username
           : this.props.currentUser
+      //set a reference to that users wishlist for the socket
       this.wishlistData = db.ref(`wishlist/${this.userToView}`)
     }
 
@@ -24,8 +29,10 @@ export default withRouter(
     }
 
     async componentDidMount() {
+      //puts the users list on state
       const {data} = await axios.get(`/api/wishlist/${this.userToView}`)
       this.setState({wishlist: data})
+      //sets up listener on the users list
       this.wishlistData.on('value', snapshot => {
         this.setState({wishlist: snapshot.val()})
       })
@@ -36,6 +43,8 @@ export default withRouter(
     }
 
     render() {
+      //once a user's wishlist loads, make an array of its keys to map over
+      //and load each item
       let wishlistKeys
       let wishlist = this.state.wishlist
       if (wishlist) {
@@ -49,7 +58,7 @@ export default withRouter(
           {wishlist &&
             wishlistKeys.map(id => (
               <div key={id}>
-                {wishlist[id].purchased === false && (
+                {wishlist[id].promised === false && (
                   <WishlistItem
                     id={id}
                     item={wishlist[id]}

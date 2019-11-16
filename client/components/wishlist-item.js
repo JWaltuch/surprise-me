@@ -3,10 +3,16 @@ import axios from 'axios'
 
 //props are id, item, history, match and currentUser
 export const WishlistItem = props => {
+  //declare shorthand for variables
   const item = props.item.item
   const url = props.item.url || ''
   const instructions = props.item.instructions || ''
+  //set up a the body for building a promise with a post request
   const body = {item, url, instructions, username: props.currentUser}
+  //if the user in the uri is the current user, or there is no
+  //user in the params (so user is "home"), set the user whose list
+  //we want to view to be the current, logged in user. otherwise,
+  //set the user whose list we want to view to be the user in the uri
   const userToView =
     props.match.params.username !== props.currentUser &&
     props.match.params.username
@@ -17,8 +23,9 @@ export const WishlistItem = props => {
     props.history.push(`${userToView}/update/${props.id}`)
   }
 
-  //makes request that adds to users promise list and turns purchased on users wishlist to null
   const promiseClick = async () => {
+    //makes request that adds item to currentUser's promise list and
+    //switches "promised" on userToView's wishlist item to false
     await axios.post(`/api/promises/${userToView}/${props.id}`, body)
   }
 
@@ -43,8 +50,9 @@ export const WishlistItem = props => {
         </div>
       ) : (
         <div>
-          I will get this present for {userToView}
-          <button onClick={promiseClick}>Promise</button>
+          <button onClick={promiseClick}>
+            I will get this present for {userToView}
+          </button>
         </div>
       )}
     </div>

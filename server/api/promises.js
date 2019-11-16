@@ -30,7 +30,7 @@ router.post('/:username/:id', async (req, res, next) => {
   const url = req.body.url
   const instructions = req.body.instructions
   const username = req.body.username
-  const body = {item, url, instructions, purchased: true}
+  const body = {item, url, instructions, promised: true}
   const promisesRef = db.ref(`/promises/${username}`)
 
   const id = req.params.id
@@ -47,7 +47,7 @@ router.post('/:username/:id', async (req, res, next) => {
         //right now is taking a snapshot of all items at username
         const newPromises = await snapshot.val()
       })
-    wishlistRef.child(id).update({purchased: true})
+    wishlistRef.child(id).update({promised: true})
     const updatedWishlist = await db
       .ref(`/wishlist/${giftReceiver}`)
       .once('value')
