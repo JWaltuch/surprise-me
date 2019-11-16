@@ -23,12 +23,12 @@ class SecretWishlist extends Component {
       <div className="goldBox">
         {this.state.users.includes(this.username) ? (
           <div>
-            {this.username !== this.props.username ? (
+            {this.username === this.props.currentUser ? (
               <div>
                 <h1>Choose something to make {this.username}'s day!</h1>
                 <Wishlist
                   username={this.username}
-                  currentUser={this.props.username}
+                  currentUser={this.props.currentUser}
                 />
               </div>
             ) : (
@@ -51,7 +51,7 @@ class SecretWishlist extends Component {
 
 const mapState = state => {
   return {
-    username: state.user.displayName
+    currentUser: state.user.displayName
   }
 }
 
