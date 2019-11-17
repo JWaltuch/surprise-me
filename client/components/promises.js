@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {PromisesItem} from './promises-item'
 import {withRouter} from 'react-router-dom'
 import axios from 'axios'
-import firebase from '../../server/firebase'
+import firebase from 'firebase'
 const db = firebase.database()
 
 export default withRouter(
