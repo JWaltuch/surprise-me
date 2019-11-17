@@ -33,14 +33,6 @@ router.post('/signup', async (req, res, next) => {
     const password = req.body.password
     let userExists = null
 
-    await firebase
-      .database()
-      .ref(`/wishlist/${username}`)
-      .once('value')
-      .then(function(snapshot) {
-        userExists = snapshot.val()
-      })
-
     if (!username) {
       let error = new Error()
       error.message = 'Username cannot be empty'
@@ -60,6 +52,13 @@ router.post('/signup', async (req, res, next) => {
           } else {
             return next(error)
           }
+        })
+      await firebase
+        .database()
+        .ref(`/wishlist/${username}`)
+        .once('value')
+        .then(function(snapshot) {
+          userExists = snapshot.val()
         })
       await firebase.auth().currentUser.updateProfile({displayName: username})
       res.send(firebase.auth().currentUser)

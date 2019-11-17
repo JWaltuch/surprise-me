@@ -1,6 +1,6 @@
 // const passport = require('passport')
 const router = require('express').Router()
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
+// const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 module.exports = router
 
 /**
@@ -26,37 +26,37 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
     callbackURL: process.env.GOOGLE_CALLBACK
   }
 
-  const strategy = new GoogleStrategy(
-    googleConfig,
-    (token, refreshToken, profile, done) => {
-      const googleId = profile.id
-      const email = profile.emails[0].value
-      const imgUrl = profile.photos[0].value
-      const firstName = profile.name.givenName
-      const lastName = profile.name.familyName
-      const fullName = profile.displayName
+  // const strategy = new GoogleStrategy(
+  //   googleConfig,
+  //   (token, refreshToken, profile, done) => {
+  //     const googleId = profile.id
+  //     const email = profile.emails[0].value
+  //     const imgUrl = profile.photos[0].value
+  //     const firstName = profile.name.givenName
+  //     const lastName = profile.name.familyName
+  //     const fullName = profile.displayName
 
-      User.findOrCreate({
-        where: {googleId},
-        defaults: {email, imgUrl, firstName, lastName, fullName}
-      })
-        .then(([user]) => done(null, user))
-        .catch(done)
-    }
-  )
+  //     User.findOrCreate({
+  //       where: {googleId},
+  //       defaults: {email, imgUrl, firstName, lastName, fullName}
+  //     })
+  //       .then(([user]) => done(null, user))
+  //       .catch(done)
+  //   }
+  // )
 
-  passport.use(strategy)
+  // passport.use(strategy)
 
-  router.get(
-    '/',
-    passport.authenticate('google', {scope: ['email', 'profile']})
-  )
+  // router.get(
+  //   '/',
+  //   passport.authenticate('google', {scope: ['email', 'profile']})
+  // )
 
-  router.get(
-    '/callback',
-    passport.authenticate('google', {
-      successRedirect: '/home',
-      failureRedirect: '/login'
-    })
-  )
+  // router.get(
+  //   '/callback',
+  //   passport.authenticate('google', {
+  //     successRedirect: '/home',
+  //     failureRedirect: '/login'
+  //   })
+  // )
 }
