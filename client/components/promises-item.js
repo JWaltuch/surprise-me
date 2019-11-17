@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import axios from 'axios'
 
 //props are id, item, history, match and currentUser
@@ -19,7 +20,9 @@ export const PromisesItem = props => {
     <div className="list-container-item">
       <h3>Gift: {item}</h3>
       <img src="http://placekitten.com/100/200" />
-      <li>For: {giftReceiver}</li>
+      <li>
+        For: <Link to={`/${giftReceiver}`}>{giftReceiver}</Link>
+      </li>
       {!url || (
         <li>
           <a href={url}>Link</a>
