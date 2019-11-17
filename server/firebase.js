@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production') require('../secrets')
 var config = {
   apiKey: process.env.FIREBASE_API_KEY,
   authDomain: 'surpriseme-ce130.firebaseapp.com',
-  databaseURL: process.env.DATABASE_URL,
+  databaseURL: process.env.DATABASE_URL || DATABASE_URL,
   projectId: 'surpriseme-ce130',
   storageBucket: 'surpriseme-ce130.appspot.com',
   messagingSenderId: process.env.MESSAGING_SENDER_ID,
