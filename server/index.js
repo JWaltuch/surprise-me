@@ -4,7 +4,7 @@ const morgan = require('morgan')
 const compression = require('compression')
 const PORT = process.env.PORT || 3000
 const app = express()
-const firebase = require('./firebase')
+require('./firebase')
 module.exports = app
 
 /**

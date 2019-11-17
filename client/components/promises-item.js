@@ -18,7 +18,7 @@ export const PromisesItem = props => {
   return (
     <div className="list-container-item">
       <h3>Gift: {item}</h3>
-      <img src="http://placekitten.com/100/100" />
+      <img src="http://placekitten.com/100/200" />
       <li>For: {giftReceiver}</li>
       {!url || (
         <li>

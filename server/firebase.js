@@ -12,6 +12,7 @@ var config = {
   appId: process.env.APP_ID,
   measurementId: 'G-S6C7MLVB57'
 }
+console.log(config)
 firebase.initializeApp(config)
 
 module.exports = firebase
