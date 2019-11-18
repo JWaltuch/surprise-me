@@ -62,11 +62,9 @@ router.post('/signup', async (req, res, next) => {
           }
         })
 
-      //when a user is created, set up a wishlist for them in db,
-      //so db can be checked for their existence
-      // await firebase
-      //   .database()
-      //   .ref(`/wishlist`)
+      // when a user is created, set up a wishlist for them in db,
+      // so db can be checked for their existence
+      // await firebase.database().ref(`/wishlist/${username}`)
       //   .set(username)
 
       await firebase.auth().currentUser.updateProfile({displayName: username})
