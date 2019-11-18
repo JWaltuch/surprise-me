@@ -33,13 +33,10 @@ router.post('/signup', async (req, res, next) => {
 
     //if user is in the db, sets the db item on userExists,
     //confirming username is taken
-    await firebase
-      .database()
-      .ref(`/wishlist/${username}`)
-      .once('value')
-      .then(function(snapshot) {
-        userExists = snapshot.val()
-      })
+    const userTable = firebase.database().ref(`/users`)
+    await userTable.once('value').then(function(snapshot) {
+      userExists = Object.keys(snapshot.val()).includes(username)
+    })
 
     if (!username) {
       let error = new Error()
@@ -62,10 +59,12 @@ router.post('/signup', async (req, res, next) => {
           }
         })
 
-      // when a user is created, set up a wishlist for them in db,
-      // so db can be checked for their existence
-      // await firebase.database().ref(`/wishlist/${username}`)
-      //   .set(username)
+      // when a user is created add them to users table
+      let allUsers
+      await userTable.once('value').then(function(snapshot) {
+        allUsers = snapshot.val()
+      })
+      await userTable.set({...allUsers, [username]: username})
 
       await firebase.auth().currentUser.updateProfile({displayName: username})
 
