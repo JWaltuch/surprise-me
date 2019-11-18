@@ -19,7 +19,9 @@ export const WishlistItem = props => {
       ? props.match.params.username
       : props.currentUser
 
-  const updateClick = () => {
+  const updateClick = async () => {
+    // const {data} = await axios.get(`/opengraphdata/${url}`)
+    // console.log('data', data)
     props.history.push(`${userToView}/update/${props.id}`)
   }
 

@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const compression = require('compression')
 const PORT = process.env.PORT || 3000
 const app = express()
+const request = require('request')
 require('./firebase')
 module.exports = app
 
@@ -31,6 +32,14 @@ const createApp = () => {
   // auth and api routes
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
+
+  app.use('/opengraphdata/*', (req, res, next) => {
+    request(req.params[0], function(error, response, body) {
+      if (!error && response.statusCode === 200) {
+        res.send(body)
+      }
+    })
+  })
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))

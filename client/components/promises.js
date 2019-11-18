@@ -10,19 +10,12 @@ export default withRouter(
     constructor(props) {
       super(props)
       this.state = {promises: {}}
-      // this.handleDelete = this.handleDelete.bind(this)
       this.promisesData = db.ref(`promises/${this.props.currentUser}`)
     }
 
-    // async handleDelete(giftReceiver, id) {
-    //   await axios.delete(
-    //     `/api/promises/${this.props.currentUser}/${giftReceiver}/${id}`
-    //   )
-    // }
-
     async componentDidMount() {
       //puts the users promises on state
-      const {data} = await axios.get(`/api/promises/${this.currentUser}`)
+      const {data} = await axios.get(`/api/promises/${this.props.currentUser}`)
       this.setState({promises: data})
       //sets up listener on the users promises
       this.promisesData.on('value', snapshot => {
