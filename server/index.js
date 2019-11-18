@@ -33,13 +33,13 @@ const createApp = () => {
   app.use('/auth', require('./auth'))
   app.use('/api', require('./api'))
 
-  app.use('/opengraphdata/*', (req, res, next) => {
-    request(req.params[0], function(error, response, body) {
-      if (!error && response.statusCode === 200) {
-        res.send(body)
-      }
-    })
-  })
+  // app.use('/opengraphdata/*', (req, res, next) => {
+  //   request(req.params[0], function(error, response, body) {
+  //     if (!error && response.statusCode === 200) {
+  //       res.send(body)
+  //     }
+  //   })
+  // })
 
   // static file-serving middleware
   app.use(express.static(path.join(__dirname, '..', 'public')))
