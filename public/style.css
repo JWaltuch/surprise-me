@@ -46,10 +46,6 @@ form div {
   text-align: center;
 }
 
-button {
-  margin: 5px;
-}
-
 .list-container {
   display: flex;
   flex-wrap: wrap;
@@ -63,11 +59,21 @@ button {
   flex-direction: column;
   padding: 10%;
   margin: 5%;
-  min-width: 250px;
-  min-height: 300px;
+  min-width: 150px;
+  min-height: 250px;
   border-radius: 20px;
 }
 
 li {
   list-style-type: none;
+}
+
+button {
+  margin: 5px;
+  padding: 14px 10px 10px 10px;
+  max-height: 50px;
+  background-color: rgb(206, 115, 115);
+  border-radius: 28px;
+  border: 1px solid black;
+  cursor: pointer;
 }
