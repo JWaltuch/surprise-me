@@ -50,6 +50,7 @@ form div {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  background-color: rgb(206, 178, 108);
 }
 
 .list-container-item {
