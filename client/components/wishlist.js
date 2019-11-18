@@ -59,7 +59,8 @@ export default withRouter(
             {wishlist &&
               wishlistKeys.map(id => (
                 <div key={id}>
-                  {wishlist[id].promised === false && (
+                  {(wishlist[id].promised === false ||
+                    this.userToView === this.props.currentUser) && (
                     <WishlistItem
                       id={id}
                       item={wishlist[id]}
