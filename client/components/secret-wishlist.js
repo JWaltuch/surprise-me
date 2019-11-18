@@ -15,6 +15,7 @@ class SecretWishlist extends Component {
   async componentDidMount() {
     this.props.loadInitialData()
     const {data} = await axios.get('/api/users')
+    //sets usernames on the state as an array, for easy mapping
     this.setState({users: Object.keys(data)})
   }
 

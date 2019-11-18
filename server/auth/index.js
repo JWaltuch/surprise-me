@@ -2,8 +2,6 @@ const router = require('express').Router()
 const firebase = require('firebase')
 module.exports = router
 
-// const db = firebase.database()
-
 router.post('/login', async (req, res, next) => {
   const email = req.body.email
   let password = req.body.password
@@ -33,6 +31,16 @@ router.post('/signup', async (req, res, next) => {
     const password = req.body.password
     let userExists = null
 
+    //if user is in the db, sets the db item on userExists,
+    //confirming username is taken
+    await firebase
+      .database()
+      .ref(`/wishlist/${username}`)
+      .once('value')
+      .then(function(snapshot) {
+        userExists = snapshot.val()
+      })
+
     if (!username) {
       let error = new Error()
       error.message = 'Username cannot be empty'
@@ -53,14 +61,16 @@ router.post('/signup', async (req, res, next) => {
             return next(error)
           }
         })
-      await firebase
-        .database()
-        .ref(`/wishlist/${username}`)
-        .once('value')
-        .then(function(snapshot) {
-          userExists = snapshot.val()
-        })
+
+      //when a user is created, set up a wishlist for them in db,
+      //so db can be checked for their existence
+      // await firebase
+      //   .database()
+      //   .ref(`/wishlist`)
+      //   .set(username)
+
       await firebase.auth().currentUser.updateProfile({displayName: username})
+
       res.send(firebase.auth().currentUser)
     }
   } catch (err) {

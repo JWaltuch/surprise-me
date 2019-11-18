@@ -12,6 +12,7 @@ export default withRouter(
 
     async componentDidMount() {
       const {data} = await axios.get(`/api/users`)
+      //sets users on state as array for easy mapping
       this.setState({users: Object.keys(data)})
     }
 

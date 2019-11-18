@@ -14,7 +14,7 @@ export default withRouter(
     }
 
     async componentDidMount() {
-      //puts the users promises on state
+      //puts the user's promises on state
       const {data} = await axios.get(`/api/promises/${this.props.currentUser}`)
       this.setState({promises: data})
       //sets up listener on the users promises

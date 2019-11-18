@@ -4,9 +4,6 @@ import {connect} from 'react-redux'
 import Wishlist from './wishlist'
 import Promises from './promises'
 
-/**
- * COMPONENT
- */
 export const UserHome = props => {
   const {displayName} = props
 
@@ -27,9 +24,6 @@ export const UserHome = props => {
   )
 }
 
-/**
- * CONTAINER
- */
 const mapState = state => {
   return {
     displayName: state.user.displayName
@@ -38,9 +32,6 @@ const mapState = state => {
 
 export default connect(mapState)(UserHome)
 
-/**
- * PROP TYPES
- */
 UserHome.propTypes = {
   displayName: PropTypes.string
 }
