@@ -37,7 +37,7 @@ form div {
 }
 
 .goldBox {
-  background-color: rgb(222, 207, 123);
+  /* background-color: rgb(222, 207, 123); */
   border-radius: 20px;
   padding: 10px;
   margin: 18px;
@@ -50,6 +50,8 @@ form div {
 
 .center-text {
   text-align: center;
+  background-color: rgb(222, 207, 123);
+  border-radius: 20px;
 }
 
 .list-container {
@@ -67,9 +69,14 @@ form div {
   flex-direction: column;
   padding: 10%;
   margin: 5%;
-  min-width: 150px;
-  min-height: 250px;
+  /* min-width: 150px;
+  min-height: 250px; */
   border-radius: 20px;
+  transition: all 0.2s;
+}
+
+.list-container-item:hover {
+  transform: translate(-3px, -3px);
 }
 
 li {

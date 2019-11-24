@@ -41,7 +41,7 @@ export const WishlistItem = props => {
       {/* <img src="https://placekitten.com/100/200" /> */}
       {!url || (
         <li>
-          <a href={url}>Link</a>
+          <a href={url}>Buy This Here</a>
         </li>
       )}
       {!instructions || <li>Special Instructions: {instructions}</li>}

@@ -25,7 +25,7 @@ export const PromisesItem = props => {
       </li>
       {!url || (
         <li>
-          <a href={url}>Link</a>
+          <a href={url}>Buy This Here</a>
         </li>
       )}
       {!instructions || <li>Special Instructions: {instructions}</li>}
