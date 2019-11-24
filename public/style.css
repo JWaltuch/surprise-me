@@ -2,6 +2,7 @@ body {
   font-family: 'Caveat', sans-serif;
   font-size: 20px;
   background-color: rgb(179, 63, 63);
+  margin: 0px;
 }
 
 a {
@@ -30,11 +31,16 @@ form div {
   align-items: center;
 }
 
+.navGoldBox {
+  background-color: rgb(222, 207, 123);
+  padding: 10px;
+}
+
 .goldBox {
   background-color: rgb(222, 207, 123);
   border-radius: 20px;
   padding: 10px;
-  margin: 10px;
+  margin: 18px;
 }
 
 .homepage-container {
@@ -50,12 +56,13 @@ form div {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  background-color: rgb(206, 178, 108);
+  background-image: url('https://www.taylorguitars.com/sites/default/files/styles/hero_rotator/public/top-mahogany-feature-texture-2000.jpg?itok=IzyHQjqO');
+  border-radius: 20px;
 }
 
 .list-container-item {
   border: 1px rgb(179, 63, 63) solid;
-  background-color: rgb(227, 190, 98);
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/2e/Notecard.jpg');
   display: flex;
   flex-direction: column;
   padding: 10%;

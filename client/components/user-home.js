@@ -16,7 +16,7 @@ export const UserHome = props => {
           <Wishlist currentUser={displayName} />
         </div>
         <div>
-          <h2 className="center-text">Promises:</h2>
+          <h2 className="center-text">My Promises:</h2>
           <Promises currentUser={displayName} />
         </div>
       </div>

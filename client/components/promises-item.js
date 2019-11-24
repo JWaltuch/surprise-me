@@ -19,7 +19,7 @@ export const PromisesItem = props => {
   return (
     <div className="list-container-item">
       <h3>Gift: {item}</h3>
-      <img src="https://placekitten.com/100/200" />
+      {/* <img src="https://placekitten.com/100/200" /> */}
       <li>
         For: <Link to={`/${giftReceiver}`}>{giftReceiver}</Link>
       </li>
