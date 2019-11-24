@@ -5,7 +5,11 @@ export const Form = props => {
 
   return (
     <div>
-      <form onSubmit={() => handleSubmit(event)} name={item}>
+      <form
+        className="goldBox box"
+        onSubmit={() => handleSubmit(event)}
+        name={item}
+      >
         <div>
           <label htmlFor="item">
             <small>Gift Name:</small>

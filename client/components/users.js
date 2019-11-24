@@ -18,7 +18,7 @@ export default withRouter(
 
     render() {
       return (
-        <div className="goldBox">
+        <div className="box">
           <h2>Users: </h2>
           <SearchBar />
           {this.state.users[0] && (

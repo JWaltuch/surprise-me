@@ -9,7 +9,7 @@ export const SearchBar = withRouter(props => {
   }
 
   return (
-    <form className="goldBox" onSubmit={() => goToPage(event)}>
+    <form className="goldBox box" onSubmit={() => goToPage(event)}>
       <label htmlFor="user">Search For User:</label>
       <input name="user" />
       <button type="submit">Go To Page</button>

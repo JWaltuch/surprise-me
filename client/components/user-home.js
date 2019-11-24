@@ -8,7 +8,7 @@ export const UserHome = props => {
   const {displayName} = props
 
   return (
-    <div className="goldBox">
+    <div className="box">
       <h1 className="center-text">Hello, {displayName}!</h1>
       <div className="homepage-container">
         <div>

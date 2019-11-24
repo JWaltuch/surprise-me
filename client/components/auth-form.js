@@ -11,7 +11,7 @@ const AuthForm = props => {
 
   return (
     <div>
-      <form className="goldBox" onSubmit={handleSubmit} name={name}>
+      <form className="goldBox box" onSubmit={handleSubmit} name={name}>
         {displayName === 'Sign Up' && (
           <div>
             <label htmlFor="username">

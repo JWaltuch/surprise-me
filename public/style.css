@@ -31,16 +31,15 @@ form div {
   align-items: center;
 }
 
-.navGoldBox {
-  background-color: rgb(222, 207, 123);
-  padding: 10px;
-}
-
-.goldBox {
-  /* background-color: rgb(222, 207, 123); */
+.box {
   border-radius: 20px;
   padding: 10px;
   margin: 18px;
+}
+
+.goldBox {
+  background-color: rgb(222, 207, 123);
+  padding: 10px;
 }
 
 .homepage-container {
