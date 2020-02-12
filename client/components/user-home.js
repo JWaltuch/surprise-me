@@ -13,6 +13,17 @@ export const UserHome = props => {
       <div className="homepage-container">
         <div>
           <h2 className="center-text">My Wishlist:</h2>
+          {!props.match.params.username && (
+            <div className="center-text">
+              <button
+                onClick={() => {
+                  props.history.push(`${props.displayName}/add`)
+                }}
+              >
+                Add Gift
+              </button>
+            </div>
+          )}
           <Wishlist currentUser={displayName} />
         </div>
         <div>
