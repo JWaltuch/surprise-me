@@ -66,8 +66,9 @@ form div {
   background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/2e/Notecard.jpg');
   display: flex;
   flex-direction: column;
-  padding: 10%;
-  margin: 5%;
+  padding: 5%;
+  margin-top: 5%;
+  margin-bottom: 5%;
   width: 250px;
   height: 250px;
   border-radius: 20px;
