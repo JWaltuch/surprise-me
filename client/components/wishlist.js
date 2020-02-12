@@ -51,11 +51,11 @@ export default withRouter(
         wishlistKeys = Object.keys(wishlist)
       }
       return (
-        <div>
+        <div className="list-container">
+          {!this.props.match.params.username && (
+            <button onClick={this.handleClick}>Add Gift</button>
+          )}
           <div className="list-container">
-            {!this.props.match.params.username && (
-              <button onClick={this.handleClick}>Add Gift</button>
-            )}
             {wishlist &&
               wishlistKeys.map(id => (
                 <div key={id}>
