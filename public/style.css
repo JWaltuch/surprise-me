@@ -55,6 +55,7 @@ h1 {
   text-align: center;
   background-color: rgb(222, 207, 123);
   border-radius: 20px;
+  border: 1px solid black;
 }
 
 .list-container {
