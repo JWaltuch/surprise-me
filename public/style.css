@@ -92,7 +92,7 @@ li {
 }
 
 button {
-  margin: 5px;
+  margin: 8px;
   padding: 14px 10px 10px 10px;
   max-height: 50px;
   background-color: rgb(206, 115, 115);
@@ -103,4 +103,5 @@ button {
 
 button:hover {
   background-color: rgb(235, 172, 172);
+  transform: translate(-3px, -3px);
 }

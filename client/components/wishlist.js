@@ -72,7 +72,6 @@ export default withRouter(
                 </div>
               ))}
           </div>
-          //{' '}
         </div>
       )
     }
