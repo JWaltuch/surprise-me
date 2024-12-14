@@ -5,3 +5,8 @@ _Surprise Me! is the best way to surprise your friends and family with gifts the
 Check out the deployed site [here][site-link]!
 
 [site-link]: https://surprisemee.herokuapp.com/
+
+## Running locally
+
+`npm install`
+`npm run start-dev`
