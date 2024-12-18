@@ -1,22 +1,22 @@
-import React, {Component} from 'react'
-import {withRouter} from 'react-router-dom'
-import {connect} from 'react-redux'
-import {me} from '../store'
-import Wishlist from './wishlist'
-import axios from 'axios'
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { me } from '../store';
+import Wishlist from './wishlist';
+import axios from 'axios';
 
 class SecretWishlist extends Component {
   constructor(props) {
-    super(props)
-    this.username = props.match.params.username
-    this.state = {users: []}
+    super(props);
+    this.username = props.match.params.username;
+    this.state = { users: [] };
   }
 
   async componentDidMount() {
-    this.props.loadInitialData()
-    const {data} = await axios.get('/api/users')
+    this.props.loadInitialData();
+    const { data } = await axios.get('/api/users');
     //sets usernames on the state as an array, for easy mapping
-    this.setState({users: Object.keys(data)})
+    this.setState({ users: Object.keys(data) });
   }
 
   render() {
@@ -43,22 +43,22 @@ class SecretWishlist extends Component {
           </div>
         )}
       </div>
-    )
+    );
   }
 }
 
-const mapState = state => {
+const mapState = (state) => {
   return {
-    currentUser: state.user.displayName
-  }
-}
+    currentUser: state.user.displayName,
+  };
+};
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
-      dispatch(me())
-    }
-  }
-}
+      dispatch(me());
+    },
+  };
+};
 
-export default withRouter(connect(mapState, mapDispatch)(SecretWishlist))
+export default withRouter(connect(mapState, mapDispatch)(SecretWishlist));

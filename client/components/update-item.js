@@ -1,45 +1,45 @@
-import React, {Component} from 'react'
-import {Form} from './form'
-import {withRouter} from 'react-router-dom'
-import {connect} from 'react-redux'
-import {me} from '../store'
-import axios from 'axios'
+import React, { Component } from 'react';
+import { Form } from './form';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { me } from '../store';
+import axios from 'axios';
 
 class UpdateItem extends Component {
   constructor(props) {
-    super(props)
-    this.state = {item: '', url: '', instructions: ''}
-    this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleDelete = this.handleDelete.bind(this)
+    super(props);
+    this.state = { item: '', url: '', instructions: '' };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   async componentDidMount() {
-    this.props.loadInitialData()
-    let {data} = await axios.get(
-      `/api/wishlist/${this.props.username}/${this.props.match.params.id}`
-    )
-    this.setState(data)
+    this.props.loadInitialData();
+    let { data } = await axios.get(
+      `/api/wishlist/${this.props.username}/${this.props.match.params.id}`,
+    );
+    this.setState(data);
   }
 
   async handleSubmit(event) {
-    event.preventDefault()
+    event.preventDefault();
     const body = {
       item: event.target.item.value,
       url: event.target.url.value,
-      instructions: event.target.instructions.value
-    }
+      instructions: event.target.instructions.value,
+    };
     await axios.put(
       `/api/wishlist/${this.props.username}/${this.props.match.params.id}`,
-      body
-    )
-    this.props.history.push('/home')
+      body,
+    );
+    this.props.history.push('/home');
   }
 
   async handleDelete() {
     await axios.delete(
-      `/api/wishlist/${this.props.username}/${this.props.match.params.id}`
-    )
-    this.props.history.push(`/home`)
+      `/api/wishlist/${this.props.username}/${this.props.match.params.id}`,
+    );
+    this.props.history.push('/home');
   }
 
   render() {
@@ -60,22 +60,22 @@ class UpdateItem extends Component {
           <div>You do not have permission to modify this list!</div>
         )}
       </div>
-    )
+    );
   }
 }
 
-const mapState = state => {
+const mapState = (state) => {
   return {
-    username: state.user.displayName
-  }
-}
+    username: state.user.displayName,
+  };
+};
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
-      dispatch(me())
-    }
-  }
-}
+      dispatch(me());
+    },
+  };
+};
 
-export default withRouter(connect(mapState, mapDispatch)(UpdateItem))
+export default withRouter(connect(mapState, mapDispatch)(UpdateItem));

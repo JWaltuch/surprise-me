@@ -1,7 +1,12 @@
 {
   "presets": [
-    "@babel/react",
-    "@babel/env"
+      ["@babel/preset-env",
+      {
+        "targets": "> 0.25%, not dead",  // You can specify your target browsers
+        "useBuiltIns": "entry",  // This tells Babel to include necessary polyfills
+        "corejs": 3  // Specify the version of core-js (use core-js version 3)
+      }],
+    "@babel/react"
     /*
     Babel uses these "presets" to know how to transpile your Javascript code. Here's what we're saying with these:
 
@@ -21,12 +26,12 @@
     [
       "@babel/plugin-proposal-decorators",
       {
-        "legacy": true
+        "decoratorsBeforeExport": true  // Set the 'decoratorsBeforeExport' option
       }
     ],
     "@babel/plugin-proposal-function-sent",
     "@babel/plugin-proposal-export-namespace-from",
     "@babel/plugin-proposal-numeric-separator",
-    "@babel/plugin-proposal-throw-expressions"
+    "@babel/plugin-proposal-throw-expressions",
   ]
 }

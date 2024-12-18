@@ -1,32 +1,32 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {withRouter, Route, Switch, Redirect} from 'react-router-dom'
-import PropTypes from 'prop-types'
-import {Login, Signup, UserHome} from './components'
-import AddItem from './components/add-item'
-import UpdateItem from './components/update-item'
-import SecretWishlist from './components/secret-wishlist'
-import Users from './components/users'
-import {me} from './store'
-import firebase from '../server/firebase'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { Login, Signup, UserHome } from './components';
+import AddItem from './components/add-item';
+import UpdateItem from './components/update-item';
+import SecretWishlist from './components/secret-wishlist';
+import Users from './components/users';
+import { me } from './store';
+import firebase from '../server/firebase';
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     // this.isLoggedIn = null
   }
   componentDidMount() {
-    this.props.loadInitialData()
+    this.props.loadInitialData();
     // console.log(firebase.auth())
     // this.isLoggedIn = firebase.auth().currentUser
     // console.log(this.isLoggedIn)
   }
 
   render() {
-    const {isLoggedIn} = this.props
+    const { isLoggedIn } = this.props;
 
     return (
       <Switch>
@@ -49,37 +49,37 @@ class Routes extends Component {
         {/* Displays our Login component as a fallback */}
         <Route component={Login} />
       </Switch>
-    )
+    );
   }
 }
 
 /**
  * CONTAINER
  */
-const mapState = state => {
+const mapState = (state) => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.displayName
-  }
-}
+    isLoggedIn: !!state.user.displayName,
+  };
+};
 
-const mapDispatch = dispatch => {
+const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
-      dispatch(me())
-    }
-  }
-}
+      dispatch(me());
+    },
+  };
+};
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(mapState, mapDispatch)(Routes))
+export default withRouter(connect(mapState, mapDispatch)(Routes));
 
 /**
  * PROP TYPES
  */
 Routes.propTypes = {
   loadInitialData: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
-}
+  isLoggedIn: PropTypes.bool.isRequired,
+};

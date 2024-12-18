@@ -1,11 +1,11 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
-import Wishlist from './wishlist'
-import Promises from './promises'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import Wishlist from './wishlist';
+import Promises from './promises';
 
-export const UserHome = props => {
-  const {displayName} = props
+export const UserHome = (props) => {
+  const { displayName } = props;
 
   return (
     <div className="box">
@@ -21,17 +21,17 @@ export const UserHome = props => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-const mapState = state => {
+const mapState = (state) => {
   return {
-    displayName: state.user.displayName
-  }
-}
+    displayName: state.user.displayName,
+  };
+};
 
-export default connect(mapState)(UserHome)
+export default connect(mapState)(UserHome);
 
 UserHome.propTypes = {
-  displayName: PropTypes.string
-}
+  displayName: PropTypes.string,
+};

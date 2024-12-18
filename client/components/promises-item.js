@@ -1,20 +1,20 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
-import axios from 'axios'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 //props are id, item, history, match and currentUser
-export const PromisesItem = props => {
+export const PromisesItem = (props) => {
   //declare shorthand for variables
-  const item = props.item.item
-  const url = props.item.url
-  const instructions = props.item.instructions
-  const giftReceiver = props.item.for
+  const item = props.item.item;
+  const url = props.item.url;
+  const instructions = props.item.instructions;
+  const giftReceiver = props.item.for;
 
   const handleDelete = async () => {
     await axios.delete(
-      `/api/promises/${props.currentUser}/${giftReceiver}/${props.id}`
-    )
-  }
+      `/api/promises/${props.currentUser}/${giftReceiver}/${props.id}`,
+    );
+  };
 
   return (
     <div className="list-container-item">
@@ -31,5 +31,5 @@ export const PromisesItem = props => {
       {!instructions || <li>Special Instructions: {instructions}</li>}
       <button onClick={() => handleDelete()}>I Can't Get This Anymore</button>
     </div>
-  )
-}
+  );
+};
