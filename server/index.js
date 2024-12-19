@@ -1,90 +1,89 @@
-const path = require('path');
-const express = require('express');
-const morgan = require('morgan');
-const compression = require('compression');
-const PORT = process.env.PORT || 3000;
-const app = express();
-// const request = require('request');
-// import  {app as firebase, auth, firestore} from "./firebase"
-module.exports = app;
+import path from 'path'; // Import path module for handling file and directory paths
+import express from 'express'; // Import express for setting up the server
+import morgan from 'morgan'; // Import morgan for HTTP request logging
+import compression from 'compression'; // Import compression to optimize response sizes
+
+const PORT = process.env.PORT || 3000; // Set up the port from environment variables or default to 3000
+const app = express(); // Create an instance of the Express app
+
+if (process.env.NODE_ENV !== 'production') {
+  import('../secrets.js'); // Dynamic import for secrets only in non-production
+}
 
 /**
- * In your development environment, you can keep all of your
- * app's secret API keys in a file called `secrets.js`, in your project
- * root. This file is included in the .gitignore - it will NOT be tracked
- * or show up on Github. On your production server, you can add these
- * keys as environment variables, so that they can still be read by the
- * Node process on process.env
+ * Create and configure the app with necessary middleware and routes.
  */
-if (process.env.NODE_ENV !== 'production') require('../secrets');
-
-const createApp = () => {
+const createApp = async () => {
   // logging middleware
-  app.use(morgan('dev'));
+  app.use(morgan('dev')); // Logs requests to the console in 'dev' format
 
   // body parsing middleware
-  app.use(express.json());
-  app.use(express.urlencoded({extended: true}));
+  app.use(express.json()); // Parse JSON bodies in requests
+  app.use(express.urlencoded({extended: true})); // Parse URL-encoded bodies (e.g., form submissions)
 
   // compression middleware
-  app.use(compression());
+  app.use(compression()); // Compress all HTTP responses for efficiency
 
-  // auth and api routes
-  app.use('/auth', require('./auth'));
-  app.use('/api', require('./api'));
-
-  // app.use('/opengraphdata/*', (req, res, next) => {
-  //   request(req.params[0], function(error, response, body) {
-  //     if (!error && response.statusCode === 200) {
-  //       res.send(body)
-  //     }
-  //   })
-  // })
+  // Dynamically import auth and api routes and use them
+  const authRoutes = await import('./auth/index.js');
+  app.use('/auth', authRoutes.default); // Dynamically loaded middleware
+  const apiRoutes = await import('./api/index.js');
+  app.use('/api', apiRoutes.default); // Dynamically loaded middleware
 
   // static file-serving middleware
-  app.use(express.static(path.join(__dirname, '..', 'public')));
+  app.use(express.static(path.join(__dirname, '..', 'public'))); // Serve static files from the 'public' directory
 
   // any remaining requests with an extension (.js, .css, etc.) send 404
   app.use((req, res, next) => {
     if (path.extname(req.path).length) {
       const err = new Error('Not found');
       err.status = 404;
-      next(err);
+      next(err); // Send the error to the error handling middleware
     } else {
-      next();
+      next(); // Pass control to the next middleware
     }
   });
 
-  // sends index.html
+  // sends index.html for any route that doesn't match
   app.use('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'public/index.html'));
+    res.sendFile(path.join(__dirname, '..', 'public/index.html')); // Return the index.html for any route
   });
 
-  // error handling endware
+  // error handling middleware
   app.use((err, req, res, next) => {
-    console.error(err);
-    console.error(err.stack);
-    res.status(err.status || 500).send(err.message || 'Internal server error.');
+    console.error(err); // Log the error to the console
+    console.error(err.stack); // Log the error stack trace
+    res.status(err.status || 500).send(err.message || 'Internal server error.'); // Send error message to the client
   });
 };
 
+/**
+ * Start listening on the specified port.
+ */
 const startListening = () => {
-  // start listening (and create a 'server' object representing our server)
   const server = app.listen(PORT, () =>
-    console.log(`Mixing it up on port ${PORT}`),
+    console.log(`Mixing it up on port ${PORT}`)
   );
 };
 
+/**
+ * Boot the app by creating the app and starting the server.
+ */
 async function bootApp() {
-  await createApp();
-  await startListening();
+  await createApp(); // Set up the app with middleware and routes
+  await startListening(); // Start the server
 }
-// This evaluates as true when this file is run directly from the command line,
-// i.e. when we say 'node server/index.js' (or 'nodemon server/index.js', or 'nodemon server', etc)
-// It will evaluate false when this module is required by another module - for example,
-// if we wanted to require our app in a test spec
-if (require.main === module) {
-  bootApp();
+
+/**
+ * This evaluates as true when this file is run directly from the command line,
+ * i.e. when we say 'node server/index.js' (or 'nodemon server/index.js', etc).
+ * It will evaluate false when this module is required by another module (e.g., for testing).
+ */
+if (import.meta.url === process.argv[1]) {
+  bootApp(); // Run the app if the file is executed directly
 } else {
-  createApp();
+  createApp(); // Only create the app (without starting the server) if it's imported
 }
+
+// Export the app to be used elsewhere in the project (e.g., for testing)
+export default app;

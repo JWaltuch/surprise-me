@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Form} from './form';
+import {Form} from './form.js';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {me} from '../store';
+import {me} from '../store/index.js';
 import axios from 'axios';
 
 class UpdateItem extends Component {
@@ -16,7 +16,7 @@ class UpdateItem extends Component {
   async componentDidMount() {
     this.props.loadInitialData();
     let {data} = await axios.get(
-      `/api/wishlist/${this.props.username}/${this.props.match.params.id}`,
+      `/api/wishlist/${this.props.username}/${this.props.match.params.id}`
     );
     this.setState(data);
   }
@@ -30,14 +30,14 @@ class UpdateItem extends Component {
     };
     await axios.put(
       `/api/wishlist/${this.props.username}/${this.props.match.params.id}`,
-      body,
+      body
     );
     this.props.history.push('/home');
   }
 
   async handleDelete() {
     await axios.delete(
-      `/api/wishlist/${this.props.username}/${this.props.match.params.id}`,
+      `/api/wishlist/${this.props.username}/${this.props.match.params.id}`
     );
     this.props.history.push('/home');
   }

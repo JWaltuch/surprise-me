@@ -1,10 +1,17 @@
-const webpack = require('webpack');
+import webpack from 'webpack';
+import path from 'path';
+// import NodePolyfillPlugin from 'node-polyfill-webpack-plugin'; // Uncomment if using NodePolyfillPlugin
+import {fileURLToPath} from 'url'; // This will help with __dirname equivalent in ES modules
+
 const isDev = process.env.NODE_ENV === 'development';
 
-module.exports = {
+// Ensure we have __dirname available in ES modules context
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+export default {
   mode: isDev ? 'development' : 'production',
   // plugins: [
-  // 	new NodePolyfillPlugin({exclude}),
+  //   new NodePolyfillPlugin({exclude}),
   // ],
   plugins: [
     // Use IgnorePlugin to explicitly ignore `node:events`
@@ -21,29 +28,29 @@ module.exports = {
     './client/index.js',
   ],
   output: {
-    path: __dirname,
-    filename: './public/bundle.js',
+    path: path.resolve(__dirname, 'public'), // Using path.resolve(__dirname) for output path
+    filename: 'bundle.js',
   },
   resolve: {
     extensions: ['.js', '.jsx'],
     fallback: {
-      buffer: require.resolve('buffer/'),
-      process: require.resolve('process/browser.js'),
+      buffer: 'buffer/',
+      process: 'process/browser.js',
       fs: false,
-      stream: require.resolve('stream-browserify'),
-      url: require.resolve('url/'), // Polyfill for `URL` in Node.js environments
-      querystring: require.resolve('querystring-es3'),
-      crypto: require.resolve('crypto-browserify'),
-      path: require.resolve('path-browserify'),
-      assert: require.resolve('assert'),
+      stream: 'stream-browserify',
+      url: 'url/', // Polyfill for `URL` in Node.js environments
+      querystring: 'querystring-es3',
+      crypto: 'crypto-browserify',
+      path: 'path-browserify',
+      assert: 'assert',
       tls: false,
-      vm: require.resolve('vm-browserify'),
-      http: require.resolve('stream-http'),
-      http2: require.resolve('stream-http'),
-      https: require.resolve('https-browserify'),
-      net: require.resolve('net'),
-      zlib: require.resolve('browserify-zlib'),
-      os: require.resolve('os-browserify/browser'),
+      vm: 'vm-browserify',
+      http: 'stream-http',
+      http2: 'stream-http',
+      https: 'https-browserify',
+      net: 'net',
+      zlib: 'browserify-zlib',
+      os: 'os-browserify/browser',
       child_process: false,
     },
   },
@@ -65,9 +72,6 @@ module.exports = {
           loader: 'babel-loader', // If you're using Babel to transpile ES6+
           options: {
             presets: ['@babel/preset-env'],
-            plugins: [
-              '@babel/plugin-transform-modules-commonjs', // If needed for compatibility
-            ],
           },
         },
       },

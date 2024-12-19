@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {me} from '../store';
-import Wishlist from './wishlist';
+import {me} from '../store/index.js';
+import Wishlist from './wishlist.js';
 import axios from 'axios';
 
 class SecretWishlist extends Component {

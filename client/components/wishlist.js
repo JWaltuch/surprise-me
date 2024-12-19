@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {WishlistItem} from './wishlist-item';
+import {WishlistItem} from './wishlist-item.js';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 import {getDatabase, ref} from 'firebase/database';
@@ -75,5 +75,5 @@ export default withRouter(
         </div>
       );
     }
-  },
+  }
 );

@@ -1,12 +1,18 @@
-import {Router as router} from 'express';
-export default router;
+import {Router} from 'express';
+import usersRouter from './users.js';
+import wishlistRouter from './wishlist.js';
+import promisesRouter from './promises.js';
 
-router.use('/users', require('./users'));
-router.use('/wishlist', require('./wishlist'));
-router.use('/promises', require('./promises'));
+const router = Router();
+
+router.use('/users', usersRouter);
+router.use('/wishlist', wishlistRouter);
+router.use('/promises', promisesRouter);
 
 router.use((req, res, next) => {
   const error = new Error('Not Found');
   error.status = 404;
   next(error);
 });
+
+export default router;

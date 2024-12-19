@@ -1,7 +1,6 @@
 import {Router as router} from 'express';
-import {db} from '../firebase';
+import {db} from '../firebase.js';
 import {ref, get} from 'firebase/database';
-export default router;
 
 router.get('/', async (req, res, next) => {
   try {
@@ -20,3 +19,5 @@ router.get('/', async (req, res, next) => {
     next(err);
   }
 });
+
+export default router;

@@ -1,8 +1,7 @@
 // const passport = require('passport')
-const router = require('express').Router();
+import {Router} from 'express';
 // const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
-module.exports = router;
-
+const router = Router();
 /**
  * For OAuth keys and other secrets, your Node process will search
  * process.env to find environment variables. On your production server,
@@ -60,3 +59,5 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   //   })
   // )
 }
+
+export default router;

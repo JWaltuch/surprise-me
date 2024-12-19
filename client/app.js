@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {Navbar} from './components';
-import Routes from './routes';
+import {default as Navbar} from './components/navbar.js';
+import Routes from './routes.js';
 
 const App = () => {
   return (

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import Wishlist from './wishlist';
-import Promises from './promises';
+import Wishlist from './wishlist.js';
+import Promises from './promises.js';
 
 export const UserHome = (props) => {
   const {displayName} = props;

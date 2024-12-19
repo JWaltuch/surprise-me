@@ -7,7 +7,6 @@ import {
   signOut,
   updateProfile,
 } from 'firebase/auth';
-export default router;
 
 router.post('/login', async (req, res, next) => {
   const email = req.body.email;
@@ -107,4 +106,6 @@ router.get('/me', async (req, res) => {
   res.json(user);
 });
 
-router.use('/google', require('./google'));
+router.use('/google', require('./google.js'));
+
+export default router;

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Form} from './form';
+import {Form} from './form.js';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {me} from '../store';
+import {me} from '../store/index.js';
 import axios from 'axios';
 
 class AddItem extends Component {

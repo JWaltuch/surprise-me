@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withRouter, Link} from 'react-router-dom';
-import {SearchBar} from './search-bar';
+import {SearchBar} from './search-bar.js';
 import axios from 'axios';
 
 export default withRouter(
@@ -35,5 +35,5 @@ export default withRouter(
         </div>
       );
     }
-  },
+  }
 );

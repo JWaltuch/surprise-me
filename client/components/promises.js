@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {PromisesItem} from './promises-item';
+import {PromisesItem} from './promises-item.js';
 import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 import {getDatabase, ref} from 'firebase/database';
@@ -55,5 +55,5 @@ export default withRouter(
         </div>
       );
     }
-  },
+  }
 );

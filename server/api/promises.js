@@ -1,7 +1,6 @@
 import {Router as router} from 'express';
-import {db} from '../firebase';
+import {db} from '../firebase.js';
 import {ref, get, set, update, remove} from 'firebase/database';
-export default router;
 
 router.get('/:username', async (req, res, next) => {
   try {
@@ -25,7 +24,7 @@ router.get('/:username/:id', async (req, res, next) => {
   try {
     const itemRef = await ref(
       db,
-      `/promises/${req.params.username}/${req.params.id}`,
+      `/promises/${req.params.username}/${req.params.id}`
     );
     // Fetch the data once using the get() method
     const snapshot = await get(itemRef);
@@ -111,3 +110,5 @@ router.delete('/:username/:giftReceiver/:id', async (req, res, next) => {
     next(err);
   }
 });
+
+export default router;
