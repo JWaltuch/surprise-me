@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
-import { WishlistItem } from './wishlist-item';
-import { withRouter } from 'react-router-dom';
+import React, {Component} from 'react';
+import {WishlistItem} from './wishlist-item';
+import {withRouter} from 'react-router-dom';
 import axios from 'axios';
-import firebase from '../../server/firebase';
-const db = firebase.database();
+import {getDatabase, ref} from 'firebase/database';
+const db = getDatabase();
 
 export default withRouter(
   class Wishlist extends Component {
     constructor(props) {
       super(props);
-      this.state = { wishlist: {} };
+      this.state = {wishlist: {}};
       this.handleClick = this.handleClick.bind(this);
       //if the user in the uri is the current user, or there is no
       //user in the params (so user is "home"), set the user whose list
@@ -21,7 +21,7 @@ export default withRouter(
           ? this.props.match.params.username
           : this.props.currentUser;
       //set a reference to that users wishlist for the socket
-      this.wishlistData = db.ref(`wishlist/${this.userToView}`);
+      this.wishlistData = ref(db, `wishlist/${this.userToView}`);
     }
 
     handleClick() {
@@ -30,11 +30,11 @@ export default withRouter(
 
     async componentDidMount() {
       //puts the users list on state
-      const { data } = await axios.get(`/api/wishlist/${this.userToView}`);
-      this.setState({ wishlist: data });
+      const {data} = await axios.get(`/api/wishlist/${this.userToView}`);
+      this.setState({wishlist: data});
       //sets up listener on the users list
       this.wishlistData.on('value', (snapshot) => {
-        this.setState({ wishlist: snapshot.val() });
+        this.setState({wishlist: snapshot.val()});
       });
     }
 

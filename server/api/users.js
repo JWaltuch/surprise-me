@@ -1,17 +1,21 @@
-const router = require('express').Router();
-const firebase = require('firebase-admin');
-const db = firebase.database();
-module.exports = router;
+import {Router as router} from 'express';
+import {db} from '../firebase';
+import {ref, get} from 'firebase/database';
+export default router;
 
 router.get('/', async (req, res, next) => {
   try {
-    await db
-      .ref('/wishlist')
-      .once('value')
-      .then(async function (snapshot) {
-        const users = await snapshot.val();
-        res.json(users);
-      });
+    const wishlistRef = ref(db, '/wishlist');
+    // Fetch the data once using the get() method
+    const snapshot = await get(wishlistRef);
+    // Check if data exists and retrieve the value
+    let users = null;
+    if (snapshot.exists()) {
+      users = snapshot.val();
+    } else {
+      console.log('No data available');
+    }
+    res.json(users);
   } catch (err) {
     next(err);
   }

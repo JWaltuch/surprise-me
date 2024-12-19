@@ -1,5 +1,5 @@
-const router = require('express').Router();
-module.exports = router;
+import {Router as router} from 'express';
+export default router;
 
 router.use('/users', require('./users'));
 router.use('/wishlist', require('./wishlist'));

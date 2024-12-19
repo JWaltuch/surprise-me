@@ -1,27 +1,25 @@
-import React, { Component } from 'react';
-import { PromisesItem } from './promises-item';
-import { withRouter } from 'react-router-dom';
+import React, {Component} from 'react';
+import {PromisesItem} from './promises-item';
+import {withRouter} from 'react-router-dom';
 import axios from 'axios';
-import * as firebase from 'firebase-admin';
-const db = firebase.database();
+import {getDatabase, ref} from 'firebase/database';
+const db = getDatabase();
 
 export default withRouter(
   class Promises extends Component {
     constructor(props) {
       super(props);
-      this.state = { promises: {} };
-      this.promisesData = db.ref(`promises/${this.props.currentUser}`);
+      this.state = {promises: {}};
+      this.promisesData = ref(db, `promises/${this.props.currentUser}`);
     }
 
     async componentDidMount() {
       //puts the user's promises on state
-      const { data } = await axios.get(
-        `/api/promises/${this.props.currentUser}`,
-      );
-      this.setState({ promises: data });
+      const {data} = await axios.get(`/api/promises/${this.props.currentUser}`);
+      this.setState({promises: data});
       //sets up listener on the users promises
       this.promisesData.on('value', (snapshot) => {
-        this.setState({ promises: snapshot.val() });
+        this.setState({promises: snapshot.val()});
       });
     }
 

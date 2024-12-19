@@ -4,8 +4,8 @@ const morgan = require('morgan');
 const compression = require('compression');
 const PORT = process.env.PORT || 3000;
 const app = express();
-const request = require('request');
-require('./firebase');
+// const request = require('request');
+// import  {app as firebase, auth, firestore} from "./firebase"
 module.exports = app;
 
 /**
@@ -24,7 +24,7 @@ const createApp = () => {
 
   // body parsing middleware
   app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+  app.use(express.urlencoded({extended: true}));
 
   // compression middleware
   app.use(compression());
