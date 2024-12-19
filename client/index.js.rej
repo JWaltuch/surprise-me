@@ -1,9 +1,0 @@
-diff a/client/index.js b/client/index.js	(rejected hunks)
-@@ -3,2 +3,2 @@ import ReactDOM from 'react-dom';
--import { Provider } from 'react-redux';
--import { Router } from 'react-router-dom';
-+import {Provider} from 'react-redux';
-+import {Router} from 'react-router-dom';
-@@ -8 +8 @@ import App from './app';
--import { URL } from 'url'; 
-+import {URL} from 'url';
