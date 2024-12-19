@@ -1,0 +1,26 @@
+diff a/server/firebase.js b/server/firebase.js	(rejected hunks)
+@@ -21 +21 @@
+-import { URL } from 'url'; // Import the URL polyfill
++import {URL} from 'url'; // Import the URL polyfill
+@@ -25,4 +25,4 @@ import { URL } from 'url'; // Import the URL polyfill
+-import { initializeApp } from 'firebase/app';
+-import { getAuth } from 'firebase/auth';
+-import { getFirestore } from 'firebase/firestore';
+-import { getDatabase } from 'firebase/database';
++import {initializeApp} from 'firebase/app';
++import {getAuth} from 'firebase/auth';
++import {getFirestore} from 'firebase/firestore';
++import {getDatabase} from 'firebase/database';
+@@ -31,5 +31,7 @@ if (process.env.NODE_ENV !== 'production') {
+-  import('../secrets.js').then(secrets => {
+-    // Handle secrets
+-  }).catch(err => {
+-    console.error("Error loading secrets:", err);
+-  });
++  import('../secrets.js')
++    .then((secrets) => {
++      // Handle secrets
++    })
++    .catch((err) => {
++      console.error('Error loading secrets:', err);
++    });

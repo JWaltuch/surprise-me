@@ -64,7 +64,9 @@ router.post('/:username/:id', async (req, res, next) => {
     await set(promisesRef, body);
 
     // Update the specific item in the gift receiver's wishlist to mark it as promised
-    await update(ref(db, `/wishlist/${giftReceiver}/${id}`), {promised: true});
+    await update(ref(db, `/wishlist/${giftReceiver}/${id}`), {
+      promised: true,
+    });
 
     // Fetch the updated wishlist for the gift receiver
     const snapshot = await get(wishlistRef);

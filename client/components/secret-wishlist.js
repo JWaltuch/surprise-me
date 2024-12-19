@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { me } from '../store';
+import React, {Component} from 'react';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {me} from '../store';
 import Wishlist from './wishlist';
 import axios from 'axios';
 
@@ -9,14 +9,14 @@ class SecretWishlist extends Component {
   constructor(props) {
     super(props);
     this.username = props.match.params.username;
-    this.state = { users: [] };
+    this.state = {users: []};
   }
 
   async componentDidMount() {
     this.props.loadInitialData();
-    const { data } = await axios.get('/api/users');
+    const {data} = await axios.get('/api/users');
     //sets usernames on the state as an array, for easy mapping
-    this.setState({ users: Object.keys(data) });
+    this.setState({users: Object.keys(data)});
   }
 
   render() {

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import Wishlist from './wishlist';
 import Promises from './promises';
 
 export const UserHome = (props) => {
-  const { displayName } = props;
+  const {displayName} = props;
 
   return (
     <div className="box">

@@ -1,21 +1,21 @@
-import React, { Component } from 'react';
-import { Form } from './form';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { me } from '../store';
+import React, {Component} from 'react';
+import {Form} from './form';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {me} from '../store';
 import axios from 'axios';
 
 class UpdateItem extends Component {
   constructor(props) {
     super(props);
-    this.state = { item: '', url: '', instructions: '' };
+    this.state = {item: '', url: '', instructions: ''};
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
 
   async componentDidMount() {
     this.props.loadInitialData();
-    let { data } = await axios.get(
+    let {data} = await axios.get(
       `/api/wishlist/${this.props.username}/${this.props.match.params.id}`,
     );
     this.setState(data);

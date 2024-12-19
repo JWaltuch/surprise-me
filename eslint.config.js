@@ -1,15 +1,14 @@
-// eslint.config.js
+import {defineConfig} from 'eslint-define-config';
+import eslintPluginReact from 'eslint-plugin-react';
+import eslintPluginPrettier from 'eslint-plugin-prettier';
+import babelParser from '@babel/eslint-parser';
 
-// Import the necessary plugins and parser
-const eslintPluginReact = require('eslint-plugin-react');
-const eslintPluginPrettier = require('eslint-plugin-prettier');
-const babelParser = require('@babel/eslint-parser');
-
-module.exports = [
+export default defineConfig([
   // ESLint Recommended Rules
   {
+    files: ['**/*.js', '**/*.jsx'], // Apply to all JavaScript and JSX files
     languageOptions: {
-      parser: babelParser, // Use the Babel parser as an object
+      parser: babelParser,
       parserOptions: {
         ecmaVersion: 2020, // Allow modern JavaScript syntax (e.g., async/await, modules)
         sourceType: 'module', // Enable ECMAScript modules (ESM)
@@ -25,31 +24,18 @@ module.exports = [
       },
     },
     rules: {
-      // Basic JS rules
-      // 'no-unused-vars': 'warn', // Warn about unused variables
-      // 'no-console': 'warn', // Warn about console.log statements
       eqeqeq: ['error', 'always'], // Require strict equality (===)
-      // 'no-trailing-spaces': 'error', // Disallow trailing spaces at the end of lines
       semi: ['error', 'always'], // Require semicolons at the end of statements
       quotes: ['error', 'single'], // Prefer single quotes for strings
-      indent: ['error', 2], // Use 2 spaces for indentation
+      indent: ['warn', 2], // Use 2 spaces for indentation
     },
   },
 
   // React Plugin Rules
   {
-    languageOptions: {
-      parser: babelParser, // Use the Babel parser as an object
-      parserOptions: {
-        ecmaVersion: 2020,
-        sourceType: 'module',
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-    },
+    files: ['**/*.js', '**/*.jsx'],
     plugins: {
-      react: eslintPluginReact, // Provide the actual React plugin object
+      react: eslintPluginReact, // Provide the React plugin
     },
     rules: {
       'react/prop-types': 'off', // Disable prop-types validation (optional)
@@ -58,13 +44,25 @@ module.exports = [
     },
   },
 
-  // Prettier Plugin Rules
-  // {
-  //   plugins: {
-  //     prettier: eslintPluginPrettier, // Provide the actual Prettier plugin object
-  //   },
-  //   rules: {
-  //     "prettier/prettier": "error", // Ensure Prettier formatting is followed
-  //   },
-  // },
-];
+  // Prettier Plugin Rules & Handling Conflicts
+  {
+    files: ['**/*.js', '**/*.jsx'],
+    plugins: {
+      prettier: eslintPluginPrettier, // Add the Prettier plugin
+    },
+    rules: {
+      'prettier/prettier': 'error', // Ensure Prettier formatting is followed
+    },
+  },
+
+  // Disabling conflicting ESLint rules with Prettier
+  {
+    files: ['**/*.js', '**/*.jsx'],
+    rules: {
+      'no-trailing-spaces': 'off', // Disable conflicting rules with Prettier
+      indent: 'off', // Disable conflicting indentation rules with Prettier
+      semi: 'off', // Disable conflicting semicolon rules with Prettier
+      quotes: 'off', // Disable conflicting quotes rules with Prettier
+    },
+  },
+]);

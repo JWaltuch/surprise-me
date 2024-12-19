@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const Form = (props) => {
-  const { item, url, instructions, handleSubmit } = props;
+  const {item, url, instructions, handleSubmit} = props;
 
   return (
     <div>

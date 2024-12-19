@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 export const SearchBar = withRouter((props) => {
   const goToPage = (event) => {

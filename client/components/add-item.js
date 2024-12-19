@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import { Form } from './form';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { me } from '../store';
+import React, {Component} from 'react';
+import {Form} from './form';
+import {withRouter} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {me} from '../store';
 import axios from 'axios';
 
 class AddItem extends Component {

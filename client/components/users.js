@@ -1,19 +1,19 @@
-import React, { Component } from 'react';
-import { withRouter, Link } from 'react-router-dom';
-import { SearchBar } from './search-bar';
+import React, {Component} from 'react';
+import {withRouter, Link} from 'react-router-dom';
+import {SearchBar} from './search-bar';
 import axios from 'axios';
 
 export default withRouter(
   class Users extends Component {
     constructor(props) {
       super(props);
-      this.state = { users: [] };
+      this.state = {users: []};
     }
 
     async componentDidMount() {
-      const { data } = await axios.get('/api/users');
+      const {data} = await axios.get('/api/users');
       //sets users on state as array for easy mapping
-      this.setState({ users: Object.keys(data) });
+      this.setState({users: Object.keys(data)});
     }
 
     render() {

@@ -8,7 +8,7 @@ export const WishlistItem = (props) => {
   const url = props.item.url || '';
   const instructions = props.item.instructions || '';
   //set up a the body for building a promise with a post request
-  const body = { item, url, instructions, username: props.currentUser };
+  const body = {item, url, instructions, username: props.currentUser};
   //if the user in the uri is the current user, or there is no
   //user in the params (so user is "home"), set the user whose list
   //we want to view to be the current, logged in user. otherwise,
